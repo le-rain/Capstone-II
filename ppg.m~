@@ -12,20 +12,18 @@ phone_ppg{3} = videoToPPG(subj{3}, framerate);
 % plot ppg channels on different figure
 close all
 plot(phone_ppg{1})
-titlename = strcat("Red Values for ",filename);
+titlename = strcat('Red Values for ',filename);
 title(titlename);
 xlabel('Sample #');
 ylabel('RGB Value');
 figure
 plot(phone_ppg{2})
-titlename = strcat("Green Values for ",filename);
-title(titlename);
+%title('Green Values' + filename);
 xlabel('Sample #');
 ylabel('RGB Value');
 figure
 plot(phone_ppg{3})
-titlename = strcat("Green Values for ",filename);
-title(titlename);
+%title('Blue Values' + filename);
 xlabel('Sample #');
 ylabel('RGB Value');
 
