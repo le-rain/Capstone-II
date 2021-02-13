@@ -1,6 +1,6 @@
 % Read in and name audio files
-iphone_11 = 'carotid_iphone11_2.m4a';
-iphone_7  = 'carotid_iphone7_2.m4a';
+iphone_11 = 'Audio/carotid_iphone11.m4a';
+iphone_7  = 'Audio/carotid_iphone7.m4a';
 
 % Samples (y_x) and sample rate (Fs_x) for files
 [y_11,Fs_11] = audioread(iphone_11);
