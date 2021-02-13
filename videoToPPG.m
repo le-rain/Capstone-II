@@ -1,3 +1,4 @@
+%% Converts video to PPG signal
 function [ppg, sf] = videoToPPG(video, frameRate)
     upsampleCoef = 1;
     sf          = upsampleCoef*frameRate;
