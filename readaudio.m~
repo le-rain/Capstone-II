@@ -23,7 +23,7 @@ samples_11 = [5*Fs_11, 20*Fs_11];
 samples_7  = [5*Fs_7 , 20*Fs_7];
 % %}
 
-% Clear previous y_x value to replace with new y_x value
+% Clear previous y_x value 
 clear y_11
 clear y_7 
 
