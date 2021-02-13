@@ -1,5 +1,3 @@
-file = 
-
 function [video, frameRate] = readVideo(file, reduction_coef)
     if(nargin() == 1)
         reduction_coef = 8;
