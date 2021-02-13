@@ -1,3 +1,5 @@
+% kristin made a change
+
 % accepts string with video file name and returns framerate variable
 function framerate = ppg(vid)
 
