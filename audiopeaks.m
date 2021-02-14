@@ -1,5 +1,5 @@
 % Call this function to plot audio files and find peaks
-function [time, value] = audiopeaks(audio)
+function [time, value] = audioPeaks(audio)
 
 % Values (y_x) and sample rate (Fs_x) for file 
 [y, Fs] = audioread(audio);
