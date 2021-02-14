@@ -33,7 +33,7 @@ ylabel('RGB Value');
 
 subplot(3,1,3)
 plot(phone_ppg{3})
-titlename = strcat("Green Values for ",filename);
+titlename = strcat("Blue Values for ",filename);
 title(titlename);
 xlabel('Sample #');
 ylabel('RGB Value');

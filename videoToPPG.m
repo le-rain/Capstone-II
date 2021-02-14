@@ -25,7 +25,7 @@ function [ppg, sf] = videoToPPG(video, frameRate)
       'StopbandAttenuation1',1,'PassbandRipple', 0.5, ...
       'StopbandAttenuation2',1, ...
       'DesignMethod','butter','SampleRate', sf);
-
+  
     ppg      = filtfilt(d, (ppg - mean(ppg))/std(ppg));
 
 %     % Find the minimal rage within a window across the signal 
