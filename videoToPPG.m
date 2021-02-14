@@ -17,16 +17,26 @@ function [ppg, sf] = videoToPPG(video, frameRate)
     signalSize = length(ppg);
     windowsSize = round(frameRate * 5); % five seconds window;
     
-    % remove trends and high-frequency noise
-    hF = 0.5 * frameRate;
-    d = designfilt('bandpassiir', ...
-      'StopbandFrequency1',0.03*hF,'PassbandFrequency1', 0.05*hF, ...
-      'PassbandFrequency2',0.5*hF,'StopbandFrequency2', 0.55*hF, ...
-      'StopbandAttenuation1',1,'PassbandRipple', 0.5, ...
-      'StopbandAttenuation2',1, ...
-      'DesignMethod','butter','SampleRate', sf);
-  
-    ppg      = filtfilt(d, (ppg - mean(ppg))/std(ppg));
+    % remove trends and high-frequency noise (ORIGINAL BANDPASS FILTER)
+    hF = 0.25 / frameRate;
+%     d = designfilt('bandpassiir', ...
+%      'StopbandFrequency1',0.03*hF,'PassbandFrequency1', 0.05*hF, ...
+%      'PassbandFrequency2',0.5*hF,'StopbandFrequency2', 0.55*hF, ...
+%      'StopbandAttenuation1',1,'PassbandRipple', 0.5, ...
+%      'StopbandAttenuation2',1, ...
+%      'DesignMethod','butter','SampleRate', sf);
+%   
+%     ppg      = filtfilt(d, (ppg - mean(ppg))/std(ppg));
+    
+    % Chebyshev filter
+    Fn = 0.5 / frameRate;
+    lF = 0.03 * hF;
+    
+    [A,B,C,D] = cheby2(4,20,[lF hF]/Fn);
+
+    [filter_SOS,g] = ss2sos(A,B,C,D);
+
+    ppg = filtfilt(filter_SOS,g,ppg);
 
 %     % Find the minimal rage within a window across the signal 
 %     minRangeRed = inf;
