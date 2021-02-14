@@ -1,4 +1,4 @@
-% close all;
+close all;
 % plots videos 
 % katelyn height changes 11 pro
 % figure(2)
@@ -11,10 +11,11 @@
 %ppg('Video/lorianne-1.mp4');
 % figure(2)
 % ppg('Video/katelyn-1.mov');
+% figure
+% [subj, framerate] = ppg('Video/steady-front-1.mov');
 figure
-ppg('Video/steady-front-1.mov');
-figure
-ppg('Video/steady-front-2.mov');
+[subj, framerate, phone_ppg] = ppg('Video/steady-front-3.mov');
+
 
 %  % back flash
 %  figure(5)
