@@ -7,10 +7,14 @@ close all;
 % ppg('Video/katelyn-heightchanges-5-1.mov');
 
 % front no flash, held to neck
-figure(1)
-ppg('Video/lorianne-1.mp4');
+% figure(1)
+%ppg('Video/lorianne-1.mp4');
 % figure(2)
 % ppg('Video/katelyn-1.mov');
+% figure
+% [subj, framerate] = ppg('Video/steady-front-1.mov');
+figure
+[subj, framerate, phone_ppg] = ppg('Video/steady-front-3.mov');
 
 %  % back flash
 %  figure(5)
