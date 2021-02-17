@@ -14,7 +14,9 @@ close all;
 % figure
 % [subj, framerate] = ppg('Video/steady-front-1.mov');
 figure
+Fs = 30;
 [subj, framerate, phone_ppg] = ppg('Video/steady-front-3.mov');
+findpeaks(phone_ppg{1}, Fs, 'MinPeakDistance', 0.6,'MinPeakProminence', 0.1);
 
 %  % back flash
 %  figure(5)

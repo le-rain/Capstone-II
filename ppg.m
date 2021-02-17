@@ -18,7 +18,7 @@ phone_ppg{3} = videoToPPG(subj{3}, framerate);
 % plot ppg channels on different figure
 % close all
 Fs = 30;
-samples = 0:size(phone_ppg{1})-1;
+samples = 1:length(phone_ppg{1});
 t = samples/Fs;
 subplot(3,1,1)
 plot(t, phone_ppg{1});
