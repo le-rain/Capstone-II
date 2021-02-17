@@ -24,7 +24,8 @@ end
 
 % Plot audio values vs. time
 plot(x,y)
-findpeaks(y, Fs, 'MinPeakDistance', 0.6,'MinPeakProminence', 0.3);
+% findpeaks(y, Fs, 'MinPeakDistance', 0.5,'MinPeakProminence', 0.3);
+findpeaks(y, Fs, 'MinPeakDistance', 0.5);
 titlename = strcat("Audio Peaks for ",filename);
 title(titlename);
 xlabel('Time (s)');

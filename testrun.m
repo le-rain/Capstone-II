@@ -1,20 +1,4 @@
-% This plots the audio files and finds their peaks
-close all;
-
-figure(1)
-audioPeaks('Audio/lorianne-iphone7.m4a');
-
-figure(2)
-audioPeaks('Audio/lorianne-iphone7-2.m4a');
-
-figure(3)
-audioPeaks('Audio/lorianne-iphone11.m4a');
-
-figure(4)
-audioPeaks('Audio/lorianne-iphone11-2.m4a');
-
-% Call this function to plot audio files and find peaks
-function [time, value] = audioPeaks(audio)
+audio = 'Audio/lorianne-iphone11.m4a'
 
 % Values (y_x) and sample rate (Fs_x) for file 
 [y, Fs] = audioread(audio);
@@ -29,8 +13,8 @@ clear y
 [y, Fs] = audioread(audio,sample);
 
 % highpass band filter
-%hps = highpass(y, 0.9);
-lps = lowpass(y, 0.5);
+hps = highpass(y, 0.9);
+%lps = lowpass(y, 0.00000000007);
 %bps = bandpass(y, [0.5 0.7]);
 
 % Convert x values from number of samples to seconds
@@ -45,11 +29,17 @@ if m4a == 1
 end
 
 % plot highpass
-plot(x, lps);
-findpeaks(lps, Fs, 'MinPeakDistance', 0.4,'MinPeakProminence', 0.2);
+plot(x, y, 'g');
+% findpeaks(lps, Fs, 'MinPeakDistance', 0.4,'MinPeakProminence', 0.2);
 titlename = strcat("Audio Peaks for ",filename);
 title(titlename);
 xlabel('Time (s)');
+
+hold on
+plot(x, hps, 'r');
+hold off
+%}
+table = [y lps];
 
 %{ 
 % Plot audio values vs. time
@@ -60,5 +50,3 @@ titlename = strcat("Audio Peaks for ",filename);
 title(titlename);
 xlabel('Time (s)');
 %}
-
-end

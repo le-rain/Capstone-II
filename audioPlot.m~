@@ -29,14 +29,10 @@ clear y
 [y, Fs] = audioread(audio,sample);
 
 % highpass band filter
-%hps = highpass(y, 0.9);
-lps = lowpass(y, 0.5);
-%bps = bandpass(y, [0.5 0.7]);
+hps = highpass(y, 0.015)
 
 % Convert x values from number of samples to seconds
-% x = 1:numel(y);
-n = 1:numel(y);
-x = n ./ Fs;
+x = 1:numel(y);
 
 % Get name of plot from name of audio file
 m4a = contains(audio, 'm4a');
@@ -44,14 +40,7 @@ if m4a == 1
     filename = extractBetween(audio, "Audio/", ".m4a");
 end
 
-% plot highpass
-plot(x, lps);
-findpeaks(lps, Fs, 'MinPeakDistance', 0.4,'MinPeakProminence', 0.2);
-titlename = strcat("Audio Peaks for ",filename);
-title(titlename);
-xlabel('Time (s)');
-
-%{ 
+%
 % Plot audio values vs. time
 plot(x,y)
 findpeaks(y, Fs, 'MinPeakDistance', 0.5,'MinPeakProminence', 0.3);
@@ -59,6 +48,5 @@ findpeaks(y, Fs, 'MinPeakDistance', 0.5,'MinPeakProminence', 0.3);
 titlename = strcat("Audio Peaks for ",filename);
 title(titlename);
 xlabel('Time (s)');
-%}
 
 end
