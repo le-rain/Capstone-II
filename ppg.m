@@ -1,19 +1,19 @@
 % accepts string with video file name and returns framerate variable
 function [subj, framerate, phone_ppg] = ppg(vid)
 workspace;
-mp4 = contains(vid, 'mp4');
 
 [subj, framerate] = readVideo(vid);
 
+phone_ppg{1} = videoToPPG(subj{1}, framerate);
+phone_ppg{2} = videoToPPG(subj{2}, framerate);
+phone_ppg{3} = videoToPPG(subj{3}, framerate);
+
+mp4 = contains(vid, 'mp4');
 if mp4 == 1 
     filename = extractBetween(vid, "Video/", ".mp4");
 else
     filename = extractBetween(vid, "Video/", ".mov");
 end
-
-phone_ppg{1} = videoToPPG(subj{1}, framerate);
-phone_ppg{2} = videoToPPG(subj{2}, framerate);
-phone_ppg{3} = videoToPPG(subj{3}, framerate);
 
 % plot ppg channels on different figure
 % close all

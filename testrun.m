@@ -1,6 +1,6 @@
 clear all; close all;
 
-audio = 'Audio/lorianne-iphone11-3.m4a'
+audio = 'Audio/iphone7.2-1.m4a';
 
 % Values (y_x) and sample rate (Fs_x) for file 
 [y, Fs] = audioread(audio);
@@ -62,9 +62,14 @@ hold on
 plot(position, value, '.')
 %plot(peaks(:,1), peaks(:,2), '.')
 titlename = strcat("Audio Peaks for ",filename);
-title(titlename);
+title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
 xlabel('Time (s)');
-
+ylabel('Relative Sound Amplitude');
+ax = gca; 
+ax.XAxis.FontSize = 15;
+ax.YAxis.FontSize = 15;
+ax.FontWeight = 'bold';
+hold off;
 %hold on
 %plot(x, bps, 'r');
 hold off

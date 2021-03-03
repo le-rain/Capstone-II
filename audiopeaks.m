@@ -5,7 +5,9 @@ function [time, value] = audioPeaks(audio)
 [y, Fs] = audioread(audio);
 
 % Start sample at 5 sec in and use the next 20 sec:
-sample = [5*Fs, 25*Fs];
+sample = [5*Fs, 25*Fs]; 
+hp = highpass(y, 0.1);
+lp = lowpass(y, 0.8);
 
 % Clear previous y value to replace with new y value
 clear y
@@ -14,16 +16,19 @@ clear y
 [y, Fs] = audioread(audio,sample);
 
 % Convert x values from number of samples to seconds
-x = 1:numel(y);
+x = 1:length(y);
 
 % Get name of plot from name of audio file
 m4a = contains(audio, 'm4a');
 if m4a == 1 
     filename = extractBetween(audio, "Audio/", ".m4a");
+else 
+    filename = extractAfter(audio, "Audio/");
 end
 
 % Plot audio values vs. time
 plot(x,y)
+
 % findpeaks(y, Fs, 'MinPeakDistance', 0.5,'MinPeakProminence', 0.3);
 findpeaks(y, Fs, 'MinPeakDistance', 0.5);
 titlename = strcat("Audio Peaks for ",filename);
