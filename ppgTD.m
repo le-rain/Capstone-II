@@ -15,5 +15,9 @@ function [ppg_td, time, frameRate, roi, i, j] = ppgTD(file, roiHeight, roiWidth)
     plot(time,ppg_td)
     title(file) 
     xlabel('Time (s)')
-    ylabel('PPG (a.u.)')
+    if (roi == 1)
+        ylabel('PPG (a.u.) - Red Values')
+    elseif (roi == 2)
+        ylabel('PPG (a.u.) - Green Values')
+    end
 end
