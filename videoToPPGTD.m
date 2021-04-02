@@ -4,7 +4,7 @@ function ppg = videoToPPGTD(video,roi,i,j,roiHeight,roiWidth,frameRate)
     ppg = squeeze(sum(sum(video_roi)));
     ppg = ppg - mean(ppg);
     
-    ppg(find(abs(ppg) > 4*std(ppg))) = 0; %remove large values
+    %ppg(find(abs(ppg) > 4*std(ppg))) = 0; %remove large values
 
     hF = 0.5 * frameRate;
 
