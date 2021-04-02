@@ -1,8 +1,13 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:charts_flutter/flutter.dart';
 import 'chart.dart';
+import 'dart:io';
+import 'dart:async';
+import 'package:flutter_audio_manager/flutter_audio_manager.dart';
+import 'package:record/record.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,7 +23,13 @@ class HomePageView extends State<HomePage> {
   CameraController _controller;
   double _alpha = 0.3;
   int _bpm = 0;
+  AudioInput _currentInput = AudioInput("unknow", 0);
+  List<AudioInput> _availableInputs = [];
+  bool _isRecording = false;
 
+
+// calls camera controller and sets the state ,sets toggled to true and processing to false
+  // calls update BPM
   _toggle() {
     _initController().then((onValue) {
       Wakelock.enable();
@@ -30,6 +41,7 @@ class HomePageView extends State<HomePage> {
     });
   }
 
+// disables camera and sets toggled to false
   _untoggle() {
     _disposeController();
     Wakelock.disable();
@@ -39,13 +51,14 @@ class HomePageView extends State<HomePage> {
     });
   }
 
+  // gets the fourth camera in the list (front camera), sets resolution to low
   Future<void> _initController() async {
     try {
       List _cameras = await availableCameras();
-      _controller = CameraController(_cameras.first, ResolutionPreset.low);
+      _controller = CameraController(_cameras[3], ResolutionPreset.low);
       await _controller.initialize();
       // Future.delayed(Duration(milliseconds: 500)).then((onValue) {
-       //  _controller.flash(true);
+      //   _controller.flash(true);
       // });
       _controller.startImageStream((CameraImage image) {
         if (!_processing) {
@@ -55,13 +68,52 @@ class HomePageView extends State<HomePage> {
           _scanImage(image);
         }
       });
+
     } catch (Exception) {
       print(Exception);
     }
   }
 
+  // microphone controller
+  Future<void> _initMicController() async {
+    try {
+      if (await Record.hasPermission()) {
+        await Record.start(path: widget.path);
+
+        bool isRecording = await Record.isRecording();
+        setState(() {
+          _isRecording = isRecording;
+
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> init() async {
+    FlutterAudioManager.setListener(() async {
+      print("-----changed-------");
+      await _getInput();
+      setState(() {});
+    });
+
+    await _getInput();
+    if (!mounted) return;
+    setState(() {});
+  }
+
+  _getInput() async {
+    _currentInput = await FlutterAudioManager.getCurrentOutput();
+    print("current:$_currentInput");
+    _availableInputs = await FlutterAudioManager.getAvailableInputs();
+    print("available $_availableInputs");
+  }
+
+// calculates BPM
   _updateBPM() async {
-    List<SensorValue> _values;
+    List<SensorValue>
+    _values;
     double _avg;
     int _n;
     double _m;
@@ -103,13 +155,15 @@ class HomePageView extends State<HomePage> {
     }
   }
 
+  // takes the average of the values? of the imaging plane
   _scanImage(CameraImage image) {
     double _avg =
         image.planes.first.bytes.reduce((value, element) => value + element) /
             image.planes.first.bytes.length;
-    if (_data.length >= 50) {
-      _data.removeAt(0);
-    }
+    // if (this._data.length >= 50) {
+    //   _data.removeAt(0);
+    // }
+    stdout.writeln(this._data);
     setState(() {
       _data.add(SensorValue(DateTime.now(), _avg));
     });
@@ -125,6 +179,7 @@ class HomePageView extends State<HomePage> {
     _controller = null;
   }
 
+  // removes controller from tree
   @override
   void dispose() {
     _disposeController();
