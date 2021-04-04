@@ -21,11 +21,12 @@ function [ppg,channel,template_type,template_resampled,template_resampled_rev] =
      'StopbandAttenuation1',1,'PassbandRipple', 0.5, ...
      'StopbandAttenuation2',1, ...
      'DesignMethod','butter','SampleRate', frameRate);
-    
-    for i = [1 2]
+ 
+    dist = cell(2,2); %preallocate space for cell array
+    for i = [1 2] %for red and green PPG channels
         ppg{i} = ppg{i} - mean(ppg{i}); %center values
         %ppg{i}(find(abs(ppg{i}) > 4*std(ppg{i}))) = 0; %remove large values
-        ppg{i} = filtfilt(d, (ppg{i} - mean(ppg{i}))/std(ppg{i}));
+        ppg{i} = filtfilt(d, (ppg{i} - mean(ppg{i}))/std(ppg{i})); %apply filter
         [~,~,dist{i,1}] = findsignal(ppg{i},template_resampled,'MaxNumSegments',5);
         [~,~,dist{i,2}] = findsignal(ppg{i},template_resampled_rev,'MaxNumSegments',5);
         dist{i,1} = mean(dist{i,1}); %replace with mean of distances
