@@ -1,7 +1,7 @@
 %uses TM to identify the best channel (red or green)
 %uses TD to identify optimal ROI from best channel
 %uses TM to identify best sections of signal 
-function [ppg_tm,time,frameRate,channel,template_type,template_resampled,template_resampled_rev,i,j] = ppgTM(file,roiHeight,roiWidth)
+function [ppg_tm,time,frameRate,channel,template_type,template_resampled,template_resampled_rev,i,j,section_indices] = ppgTM(file,roiHeight,roiWidth)
     [video,fileName,height,width,frameRate] = readVideoTM(file); %read video
     [~,channel,template_type,template_resampled,template_resampled_rev] = selectSignalTM(video,frameRate); %choose best channel based on template matching
     TD = mapTM(video,channel,height,width,frameRate); %calculate temporal differences from best channel
