@@ -1,9 +1,13 @@
-function [video, height, width, frameRate] = readVideoTM(file)
+%reads video file and returns red and green channels, file name, video
+%height, video width, and frame rate
+%TO DO: implement reduction coefficient to make processing faster
+function [video, fileName, height, width, frameRate] = readVideoTM(file)
     obj = VideoReader(file); %read video
     height = obj.Height; %video height 
     width = obj.Width; %video width
     frameRate = obj.FrameRate; %frame rate
     frames = round(obj.Duration * frameRate); %number of frames
+    fileName = file;
     
     video{1} = zeros(height,width,'uint8');
     video{2} = zeros(height,width,'uint8');

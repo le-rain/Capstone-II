@@ -1,3 +1,5 @@
+%creates PPG with optimal ROI (determined by TD) from optimal channel
+%(determined by TM)
 function ppg_tm = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frameRate)
     video_roi = video{channel}(((i-1)*roiHeight+1):(i*roiHeight),((j-1)*roiWidth+1):(j*roiWidth),:);
     ppg_tm = squeeze(sum(sum(video_roi)));
