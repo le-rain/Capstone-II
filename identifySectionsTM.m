@@ -37,7 +37,7 @@ function [section_indices] = identifySectionsTM(istart, istop)
     sections{j}(k,1) = consec(end,1);
     sections{j}(k,2) = consec(end,2);
    
-    section_indices = zeros(num_sections,2) %preallocate space
+    section_indices = zeros(num_sections,2); %preallocate space
     for i = 1:num_sections
         section_indices(i,1) = sections{i}(1,1); %start index
         section_indices(i,2) = sections{i}(end,2); %end index

@@ -1,6 +1,6 @@
 %creates PPG with optimal ROI (determined by TD) from optimal channel
-%(determined by TM)
-function ppg_tm = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frameRate)
+%(determined by TM); returns PPG and corresponding time vector in seconds
+function [ppg_tm,time] = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frameRate)
     video_roi = video{channel}(((i-1)*roiHeight+1):(i*roiHeight),((j-1)*roiWidth+1):(j*roiWidth),:);
     ppg_tm = squeeze(sum(sum(video_roi)));
     ppg_tm = ppg_tm - mean(ppg_tm);
@@ -16,5 +16,7 @@ function ppg_tm = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frameRate)
      'StopbandAttenuation2',1, ...
      'DesignMethod','butter','SampleRate', frameRate);
      ppg_tm = filtfilt(d, (ppg_tm - mean(ppg_tm))/std(ppg_tm));
+     
+     time = [1:length(ppg_tm)] ./ frameRate; %generate time vector
 
 end
