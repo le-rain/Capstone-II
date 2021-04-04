@@ -1,0 +1,79 @@
+% This plots the audio files and finds their peaks
+close all; clear all;
+% 
+%figure()
+%audioPeaks('Audio/iPhone7.2-1.m4a');
+% 
+%figure()
+%audioPeaks('Audio/lorianne-iphone7-2.m4a');
+% 
+%figure(3)
+%audioPeaks('Audio/lorianne-iphone11.m4a');
+% 
+% figure(4)
+% audioPeaks('Audio/lorianne-iphone11-2.m4a');
+% 
+figure(5)
+audioPeaks('Audio/Audio_s10mic.mp3');
+
+
+% Call this function to plot audio files and find peaks
+function [time, value] = audioPeaks(audio)
+
+% Values (y_x) and sample rate (Fs_x) for file 
+[y, Fs] = audioread(audio);
+
+% Start sample at 5 sec in and use the next 20 sec:
+sample = [5*Fs, 25*Fs]; 
+
+% Values and sample rate for adjusted audio file
+[data, Fs] = audioread(audio,sample);
+
+% Convert x values from number of samples to seconds
+x = 1:length(data);
+
+% Get name of plot from name of audio file
+m4a = contains(audio, 'wma');
+if m4a == 1 
+    filename = extractBetween(audio, "/", ".wma");
+else 
+    filename = extractAfter(audio, "/");
+end
+
+% Plot audio values vs. time
+figure()
+subplot(2,1,1)
+plot(x,data)
+findpeaks(data, Fs, 'MinPeakDistance', 0.2);
+t = strcat("Unfiltered Audio Data for ", filename);
+title(t);
+
+subplot(2,1,2)
+plot(x,hp)
+findpeaks(hp, Fs, 'MinPeakDistance', 0.2);
+t = strcat("Highpass Filtered Audio Data for ", filename);
+title(t);
+%}
+%{
+subplot(2,1,2)
+plot(x,lp)
+% findpeaks(y, Fs, 'MinPeakDistance', 0.5,'MinPeakProminence', 0.3);
+findpeaks(lp, Fs, 'MinPeakDistance', 0.5);
+t = sprintf("Lowpass Filtered Audio Data (n=%0.1f, f_c=%0.1f)", n, f_c);
+title(t);
+xlabel('Time (s)');
+%}
+%{
+subplot(2,1,2)
+plot(x,bp)
+findpeaks(bp, Fs, 'MinPeakDistance', 0.5);
+t = strcat("Bandpass Filtered Audio Data for ", filename);
+title(t);
+%}
+end
+
+% lowpass filter function
+function data_filtered = lowpass_filter(data, sampl_rate, n_order, f_c);
+[b_low,a_low] = butter(n_order, f_c/sampl_rate, 'low');
+data_filtered = filtfilt(b_low, a_low, data);
+end
