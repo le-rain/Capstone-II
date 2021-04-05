@@ -6,7 +6,7 @@ function [video, fileName, height, width, frameRate] = readVideoTM(file)
     height = obj.Height; %video height 
     width = obj.Width; %video width
     frameRate = obj.FrameRate; %frame rate
-    frames = round(obj.Duration * frameRate); %number of frames
+    frames = obj.NumFrames; %number of frames
     fileName = file;
     
     video{1} = zeros(height,width,'uint8');
