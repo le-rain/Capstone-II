@@ -1,28 +1,16 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.KeyEvent;
+import androidx.appcompat.app.AppCompatActivity;
 
 // Activity class for the first direction view.
 public class Direction2Activity extends AppCompatActivity {
-    Button btn = (Button)findViewById(R.id.buttonNext2);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.direction1);
-
-        // onClick listener for next button
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Direction1Activity.this, Direction2Activity.class));
-            }
-        });
+        setContentView(R.layout.direction2);
     }
 
     @Override
@@ -41,6 +29,19 @@ public class Direction2Activity extends AppCompatActivity {
     }
 
 
+    // listens for volume up button press and release and starts the measurement activity
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && action == KeyEvent.ACTION_UP) {
+            startActivity(new Intent(Direction2Activity.this, RecordActivity.class));
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
+}
+
 //    EditText editText = (EditText) findViewById(R.id.inputName);
 //    editText.setOnEditorActionListener(new OnEditorActionListener() {
 //        @Override
@@ -53,4 +54,3 @@ public class Direction2Activity extends AppCompatActivity {
 //            return handled;
 //        }
 //    });
-}

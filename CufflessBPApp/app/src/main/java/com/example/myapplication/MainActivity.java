@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
 
-
+// MainActivity Class that represents the functions and features of the first welcome screen.
 public class MainActivity extends AppCompatActivity {
 
     TextView textIntro;
