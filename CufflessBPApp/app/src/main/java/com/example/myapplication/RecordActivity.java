@@ -48,11 +48,11 @@ public class RecordActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         countdownTime = findViewById(R.id.countdownTime);
         // cameraView = (SurfaceView) findViewById(R.id.cameraView);
-        try {
-            startRecording();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            startRecording();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // check if audio recording is permitted
