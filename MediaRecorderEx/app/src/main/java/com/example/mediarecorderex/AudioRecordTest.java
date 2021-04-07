@@ -1,4 +1,4 @@
-package com.android.audiorecordtest;
+package com.example.mediarecorderex;
 
 import android.Manifest;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Button;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +23,7 @@ import androidx.core.app.ActivityCompat;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class AudioRecordTest extends AppCompatActivity {
 
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;

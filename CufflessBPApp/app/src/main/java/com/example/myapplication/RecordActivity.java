@@ -93,18 +93,23 @@ public class RecordActivity extends AppCompatActivity {
         } catch (IllegalStateException e) {
             Log.e(LOG_TAG, "set OutputFormat failed");
         }
-        //recorder.setVideoFrameRate(FRAME_RATE);
-
-
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-//        recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-//        recorder.setVideoEncodingBitRate(CamcorderProfile.videoBitRate);
         try {
             recorder.setOutputFile(PATH_NAME);
         } catch (IllegalStateException e) {
             Log.e(LOG_TAG, "set output file failed");
         }
+        recorder.setVideoFrameRate(30);
+        //recorder.setVideoSize(videoSize.getWidth(), videoSize.getHeight());
+        recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        //recorder.setVideoFrameRate(FRAME_RATE);
+
+
+        //recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+//        recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+//        recorder.setVideoEncodingBitRate(CamcorderProfile.videoBitRate);
+
         try {
             recorder.prepare();
         } catch (IOException e) {
