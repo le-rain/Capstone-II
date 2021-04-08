@@ -9,26 +9,13 @@ package com.example.cufflessbp
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Color
-import android.hardware.Camera
-import android.media.CamcorderProfile
-import android.media.MediaRecorder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.MotionEvent
-import android.view.SurfaceView
 import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.Toast
 import android.widget.VideoView
 import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 const val REQUEST_VIDEO_CAPTURE = 1
 const val CHOOSE_VIDEO = 2
@@ -40,12 +27,14 @@ class CameraActivity : Activity() {
 //    private var mediaRecorder: MediaRecorder? = null // media recorder object (records video)
     private var videoView: VideoView? = null
     private var videoUri: Uri? = null
+    private var videoProcessor: VideoProcessor? = null
 //    private lateinit var currentPhotoPath: String
 
     // initializes layout, camera, preview surface (preview of video), and capture button info
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.camera_activity)
+
 
         videoView = findViewById(R.id.videoview)
 
@@ -57,6 +46,28 @@ class CameraActivity : Activity() {
             } else {
                 videoView?.setVideoURI(videoUri);
                 videoView?.start();
+            }
+        }
+
+
+        val processButton: Button = findViewById(R.id.process)
+        processButton.setOnClickListener {
+            if (videoUri == null) {
+                Log.d(TAG, "No video")
+            } else {
+                val f = File(videoUri.toString())
+                videoProcessor = VideoProcessor()
+                videoProcessor!!.open(Uri.fromFile(f).toString())
+
+                val fullUri = videoProcessor!!.videoUri
+                Log.d(TAG, fullUri)
+                val isOpened = videoProcessor!!.isOpened;
+
+                if (isOpened) {
+                    Log.d(TAG, "VideoProcessor Opened")
+                } else {
+                    Log.d(TAG, "VideoProcessor Opened")
+                }
             }
         }
 
@@ -121,6 +132,8 @@ class CameraActivity : Activity() {
             sendBroadcast(mediaScanIntent)
         }
     }
+
+
 
     private fun openGalleryForVideo() {
         val intent = Intent()
