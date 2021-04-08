@@ -12,6 +12,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+import org.opencv.videoio.Videoio;
 
 import java.lang.annotation.Native;
 
@@ -25,25 +26,24 @@ public class VideoProcessor {
 
     public VideoProcessor() {
         boolean opened = OpenCVLoader.initDebug();
-        if (opened) {Log.d(TAG, "Not loading");}
-        try {
-            Log.d(TAG, Core.NATIVE_LIBRARY_NAME);
-            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        } catch (Exception e) {
-            Log.d(TAG, "Didnt Load");
-        }
 
-        this.cap = new VideoCapture(videoUri);
+//
+//        try {
+//            Log.d(TAG, Core.NATIVE_LIBRARY_NAME);
+//            System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//        } catch (Exception e) {
+//            Log.d(TAG, "Didnt Load");
+//        }
+        this.cap = new VideoCapture();
     }
 
     public VideoProcessor(String videoUri) {
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         this.videoUri = videoUri;
         this.cap = new VideoCapture(videoUri);
     }
 
     public boolean isOpened() {
-        return this.isOpened();
+        return this.cap.isOpened();
     }
 
     public String getVideoUri() {
@@ -52,9 +52,18 @@ public class VideoProcessor {
 
     public boolean open(String fileName) {
         this.videoUri = fileName;
-        return this.open(fileName);
+        return this.cap.open(fileName);
     }
 
+    public int getFrameNumber() {
+        int frame_number = (int) cap.get(Videoio.CAP_PROP_POS_FRAMES);
+        return frame_number;
+    }
+
+    public int getVideoLength() {
+        int video_length = (int) cap.get(Videoio.CAP_PROP_FRAME_COUNT);
+        return video_length;
+    }
 
 }
 

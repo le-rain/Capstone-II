@@ -57,16 +57,21 @@ class CameraActivity : Activity() {
             } else {
                 val f = File(videoUri.toString())
                 videoProcessor = VideoProcessor()
-                videoProcessor!!.open(Uri.fromFile(f).toString())
+                videoProcessor!!.open(videoUri!!.path.toString())
 
                 val fullUri = videoProcessor!!.videoUri
                 Log.d(TAG, fullUri)
                 val isOpened = videoProcessor!!.isOpened;
+                val frameNum = videoProcessor!!.frameNumber;
+                Log.d(TAG, "Number of frames: $frameNum");
+
+                val videoLength = videoProcessor!!.videoLength;
+                Log.d(TAG, "Video Length: $videoLength");
 
                 if (isOpened) {
                     Log.d(TAG, "VideoProcessor Opened")
                 } else {
-                    Log.d(TAG, "VideoProcessor Opened")
+                    Log.d(TAG, "VideoProcessor Not Opened")
                 }
             }
         }
