@@ -5,7 +5,7 @@ function [ppg_tm,time] = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frame
     ppg_tm = squeeze(sum(sum(video_roi)));
     ppg_tm = ppg_tm - mean(ppg_tm);
     
-    %ppg_tm(find(abs(ppg_tm) > 4*std(ppg_tm))) = 0; %remove large values
+    ppg_tm(abs(ppg_tm) > 4*std(ppg_tm)) = 0; %remove large values
 
     hF = 0.5 * frameRate;
 
