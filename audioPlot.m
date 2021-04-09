@@ -3,7 +3,7 @@ close all; clear all;
 
 figure(1)
 subplot(3,1,1)
-audioPeaks('Audio/iPhone7.2-1.m4a');
+audioPeaks('Audio/Audio_s10mic.mp3');
 
 %figure()
 %audioPeaks('Audio/lorianne-iphone7-2.m4a');
@@ -15,10 +15,10 @@ audioPeaks('Audio/iPhone7.2-1.m4a');
 % audioPeaks('Audio/lorianne-iphone11-2.m4a');
 % 
 subplot(3,1,2)
-audioPeaks('Audio/Audio_s10mic.mp3');
+audioPeaks('Audio/s10-2.mp3');
 
 subplot(3,1,3)
-audioPeaks('Audio/s10-2.mp3');
+audioPeaks('Audio/s10-4.m4a');
 
 
 % Call this function to plot audio files and find peaks
