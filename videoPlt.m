@@ -12,8 +12,8 @@
 %  figure(6)
 %  ppg('Video/lorianne-7-back-flash-1.mov');
 % back flash - low to high on shelf 
-figure 
-ppg('Video/kc-shelf.mov');
+% figure 
+% ppg('Video/kc-shelf.mov');
  
 %  back no flash - low to high
 %  figure(7)
@@ -35,8 +35,8 @@ ppg('Video/kc-shelf.mov');
 % phone_ppg3 = plot_ppg('Video/steady-front-1.mov');
 % [subj, framerate, phone_ppg3] = get_ppg('Video/steady-front-1.mov');
 % figure
-%[subj, framerate, phone_ppg] = ppg('Video/sim-A.mov');
-% [y,Fs_audio] = audioread('Video/sim-A.mp4');
+[subj, framerate, phone_ppg] = ppg('Video/sim-A.mov');
+[y,Fs_audio] = audioread('Video/sim-A.mp4');
 % audiowrite('Audio/sim-A.WAV',y,Fs_audio);
 % audiopeaks('Audio/sim-A.wav');
 

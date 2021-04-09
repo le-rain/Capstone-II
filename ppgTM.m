@@ -1,20 +1,17 @@
-function [ppg_tm, time, frameRate, channel, template_type, template_resampled, template_resampled_rev, i, j] = ppgTM(file, roiHeight, roiWidth)
-    [video, height, width, frameRate] = readVideoTM(file); %read video
-    [~,channel,template_type,template_resampled,template_resampled_rev] = selectSignalTM(video,frameRate);
-    TD = mapTM(video, channel, height, width, frameRate);
-    [splitTD, roiHeight, roiWidth] = splitVideoTM(TD, height, width, roiHeight, roiWidth);
-    [i,j] = selectROITM(splitTD);
-    ppg_tm = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frameRate);
+%uses TM to identify the best channel (red or green)
+%uses TD to identify optimal ROI from best channel
+%uses TM to identify best sections of signal 
+function [ppg_tm,height,width,time,frameRate,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled,i,j,section_indices] = ppgTM(file,roiHeight,roiWidth)
+    [video,fileName,height,width,frameRate] = readVideoTM(file); %read video
+    [~,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled] = selectSignalTM(video,frameRate); %choose best channel based on template matching
+    TD = mapTM(video,channel,height,width,frameRate); %calculate temporal differences from best channel
+    [splitTD,roiHeight,roiWidth] = splitVideoTM(TD,height,width,roiHeight,roiWidth); %split video into blocks
+    [i,j] = selectROITM(splitTD); %choose best ROI using temporal differences
+    [ppg_tm,time] = videoToPPGTM(video,channel,i,j,roiHeight,roiWidth,frameRate); %create PPG based on best section from best channel
+    plotPPGTM(fileName,ppg_tm,time,channel,roiHeight,roiWidth); %plot PPG
     
-    %plot PPG
-    time = [1:length(ppg_tm)] ./ frameRate; %generate time vector
-    figure %create new figure
-    plot(time,ppg_tm)
-    title(file) 
-    xlabel('Time (s)')
-    if (channel == 1)
-        ylabel('PPG (a.u.) - Red Values')
-    elseif (channel == 2)
-        ylabel('PPG (a.u.) - Green Values')
-    end
+    %find and plot best sections of PPG
+    [istart,istop] = findWavesTM(ppg_tm,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled);
+    [section_indices] = identifySectionsTM(istart,istop);
+    plotSectionsTM(time,ppg_tm,section_indices);
 end

@@ -9,20 +9,17 @@ import android.widget.Button;
 
 // Activity class for the first direction view.
 public class Direction1Activity extends AppCompatActivity {
+    Button btn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.direction1);
-        Button btn = (Button)findViewById(R.id.buttonNext2);
+        btn2 = (Button)findViewById(R.id.buttonNext2);
 
         // onClick listener for next button
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Direction1Activity.this, Direction2Activity.class));
-            }
-        });
+        btn2.setOnClickListener(v -> startActivity(new Intent(Direction1Activity.this,
+                Direction2Activity.class)));
     }
 
     @Override
