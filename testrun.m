@@ -1,74 +1,49 @@
 clear all; close all;
 
-audio = 'Audio/Audio_s10mic.mp3';
+audio = 'Audio/s10-2.mp3';
 
-% Values (y_x) and sample rate (Fs_x) for file 
+% Values (y) and sample rate (Fs) for file 
 [y, Fs] = audioread(audio);
-
-% start and end times in seconds for audio sample
-t_start = 10;
-t_end   = 25;
-sample = [t_start*Fs, t_end*Fs];
-
-% Clear previous y value to replace with new y value
-clear y
-
-% Values and sample rate for cropped or adjusted audio file
-[y, Fs] = audioread(audio,sample);
-
-% Square values to amplify signal
 y = y.^2;
 
 % Convert x values from number of samples to seconds
-n = 1:numel(y);
+n = 1:length(y);
 x = n ./ Fs;
 
-% Find all peaks with minimum distance of 0.2 seconds apart (max 300 bpm)
-[value time] = findpeaks(y, Fs, 'MinPeakDistance', 0.2, 'MinPeakProminence', 0.001);
-peaks = [time, value];
+%findpeaks(y, Fs, 'MinPeakDistance', 0.2, 'MinPeakProminence', 0.001);
+peaks = findpeaks(y, Fs, 'MinPeakDistance', 0.2);
 
-% Find average peak distance to use to identify S1 and S2 peaks 
-average_peak = mean(value);
-avg_dist = mean(diff(time));
+% Histogram to find and remove bottom 1% of range in values one at a time until normal(y) --> noise
+figure()
+subplot(3,1,1)
+hist = histogram(peaks,100);
+binEdges = hist.BinEdges;   
+bottomOnePercent = binEdges(2);
+topTenPercent = binEdges(90);
+ 
+[peaks, time] = findpeaks(y, Fs, 'MinPeakDistance', 0.2, 'MinPeakProminence', binEdges(2));
 
-%{
-% Find peaks that are below 0.5*avg (too low) and above 1.5*avg (too high)
-for i = 1:numel(value)
-    if value(i) < average_peak * 0.5 %| value(i) > average_peak * 1.5
-        %peaks(i,:) = [];
-        value(i) = 0;
+for i = 1:length(peaks)
+    if peaks(i) >= topTenPercent
+        peaks(i) = 0;
         time(i) = 0;
     end
 end
-
+peaks = nonzeros(peaks);
 time = nonzeros(time);
-value = nonzeros(value);
 
-peaks = [time value];
-%}
+% Find average peak distance in third quartile range of audio to use to identify some S1 and S2 peaks 
+avg_dist = mean(diff(time(ceil(0.5*length(time)):ceil(0.75*length(time)))));
 
 % Initiliaze list for S1 and S2 peaks
 s1 = [];
 s2 = [];
 
-% Remove S1 and S2 peaks and append to respective list
-for i = 1:(numel(time)-2)
-    if time(i+1)-time(i) < avg_dist & time(i+2)-time(i+1) < avg_dist
-        time(i+2) = 0;
-        value(i+2) = 0;
-    end
-end
-time = nonzeros(time);
-value = nonzeros(value);
-
-% Refresh list with removed peaks
-peaks = [time value];
-
 % Loop for identifying and appending S1 and S2 peaks
-for i = 1:(numel(time)-2)
-    if time(i+1)-time(i) < avg_dist & time(i+2)-time(i+1) > avg_dist
-        s1 = [s1; {time(i) value(i)}];
-        s2 = [s2; {time(i+1) value(i+1)}];
+for i = 2:(length(time)-1)
+    if (time(i)-time(i-1) > avg_dist && time(i+1)-time(i) < avg_dist)
+        s1 = [s1; {time(i) peaks(i)}];
+        s2 = [s2; {time(i+1) peaks(i+1)}];
     end
 end
 
@@ -76,24 +51,17 @@ end
 s1 = cell2mat(s1);
 s2 = cell2mat(s2);
 
-% Get name of plot from name of audio file
-m4a = contains(audio, 'mp3');
-if m4a == 1 
-    filename = extractBetween(audio, "Audio/", ".mp3");
-end
+avg_s1Dist = mean(diff(s1(1,:)));
+avg_s2Dist = mean(diff(s2(1,:)));
 
-% plot audio data with peaks 
-plot(x, y, 'b');
-findpeaks(y, Fs, 'MinPeakDistance', 0.2, 'MinPeakProminence', 0.001);
+% Plot original audio file with peaks at least 0.2 seconds apart
+subplot(3,1,2)
+findpeaks(y, Fs, 'MinPeakDistance', 0.2);
+
+% Plot audio file with identified S1 and S2 peaks
+subplot(3,1,3)
+findpeaks(y, Fs, 'MinPeakDistance', 0.2, 'MinPeakProminence', binEdges(2));
 hold on
-plot(s1(:,1), s1(:,2), '.')
+plot(s1(:,1), s1(:,2), 'r.')
 plot(s2(:,1), s2(:,2), '.')
-titlename = strcat("Audio Peaks for ",filename);
-title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
-xlabel('Time (s)');
-ylabel('Relative Sound Amplitude');
-ax = gca; 
-ax.XAxis.FontSize = 15;
-ax.YAxis.FontSize = 15;
-ax.FontWeight = 'bold';
 hold off;
