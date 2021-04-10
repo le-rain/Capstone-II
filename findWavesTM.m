@@ -7,8 +7,10 @@ function [istart,istop] = findWavesTM(ppg_tm,frameRate,channel,template_type,tem
     num_segments = round(peak_estimate/2); %take best 50% of peaks
     if template_type == 1
         [istart,istop] = findsignal(ppg_tm,template_resampled{channel},'MaxNumSegments',num_segments);
+        findsignal(ppg_tm,template_resampled{channel},'MaxNumSegments',num_segments)
     else
         [istart,istop] = findsignal(ppg_tm,template_resampled_rev_scaled{channel},'MaxNumSegments',num_segments);
+        findsignal(ppg_tm,template_resampled_rev_scaled{channel},'MaxNumSegments',num_segments)
     end
     
     istart = sort(istart);

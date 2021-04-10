@@ -1,7 +1,7 @@
 %uses TM to identify the best channel (red or green)
 %uses TD to identify optimal ROI from best channel
 %uses TM to identify best sections of signal 
-function [ppg_tm,height,width,time,frameRate,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled,i,j,section_indices] = ppgTM(file,roiHeight,roiWidth)
+function [ppg_tm,height,width,time,frameRate,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled,i,j,ppg_sections] = ppgTM(file,roiHeight,roiWidth)
     [video,fileName,height,width,frameRate] = readVideoTM(file); %read video
     [~,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled] = selectSignalTM(video,frameRate); %choose best channel based on template matching
     TD = mapTM(video,channel,height,width,frameRate); %calculate temporal differences from best channel
@@ -13,5 +13,5 @@ function [ppg_tm,height,width,time,frameRate,channel,template_type,template_resa
     %find and plot best sections of PPG
     [istart,istop] = findWavesTM(ppg_tm,frameRate,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled);
     [section_indices] = identifySectionsTM(istart,istop);
-    plotSectionsTM(time,ppg_tm,section_indices);
+    ppg_sections = plotSectionsTM(time,ppg_tm,section_indices);
 end
