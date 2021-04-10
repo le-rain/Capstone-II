@@ -1,6 +1,6 @@
 % This plots the audio files and finds their peaks
 close all; clear all;
-
+%{
 figure(1)
 audioPeaks('Audio/Audio_s10mic.mp3');
 
@@ -9,7 +9,7 @@ audioPeaks('Audio/s10-2.mp3');
 
 figure(3)
 audioPeaks('Audio/s10-4.m4a');
-
+%}
 % Call this function to plot audio files and find peaks
 function [time, value] = audioPeaks(audio)
 
@@ -17,8 +17,11 @@ function [time, value] = audioPeaks(audio)
 [y, Fs] = audioread(audio);
 [filepath,name,ext] = fileparts(audio);
 
+% Use second channel/right channel
+y = y(:,2);
+
 % Square values to make peaks more prominent
-y = y.^2;
+% y = y.^2;
 
 % Convert x values from number of samples to seconds
 n = 1:length(y);

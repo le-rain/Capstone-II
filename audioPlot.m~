@@ -1,6 +1,6 @@
 % This plots the audio files and finds their peaks
 close all; clear all;
-
+%{
 figure(1)
 audioPeaks('Audio/Audio_s10mic.mp3');
 
@@ -16,13 +16,15 @@ function [time, value] = audioPeaks(audio)
 % Values (y) and sample rate (Fs) for file 
 [y, Fs] = audioread(audio);
 [filepath,name,ext] = fileparts(audio);
+
+% Square values to make peaks more prominent
 y = y.^2;
 
 % Convert x values from number of samples to seconds
 n = 1:length(y);
 x = n ./ Fs;
 
-%findpeaks(y, Fs, 'MinPeakDistance', 0.2, 'MinPeakProminence', 0.001);
+% Find peaks with minimum distance of 0.2 seconds (max 300 bpm)
 peaks = findpeaks(y, Fs, 'MinPeakDistance', 0.2);
 
 % Histogram to find and remove bottom 1% of range in values one at a time until normal(y) --> noise
