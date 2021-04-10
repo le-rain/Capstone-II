@@ -11,7 +11,7 @@ function [ppg_tm,height,width,time,frameRate,channel,template_type,template_resa
     plotPPGTM(fileName,ppg_tm,time,channel,roiHeight,roiWidth); %plot PPG
     
     %find and plot best sections of PPG
-    [istart,istop] = findWavesTM(ppg_tm,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled);
+    [istart,istop] = findWavesTM(ppg_tm,frameRate,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled);
     [section_indices] = identifySectionsTM(istart,istop);
     plotSectionsTM(time,ppg_tm,section_indices);
 end
