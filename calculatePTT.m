@@ -39,15 +39,13 @@ function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,ptt] = c
     end
     
     %remove overlaps less than 2 seconds
-    matrixlength = length(section_overlap);
-    i = 1;
-    while i <= matrixlength
+    for i = 1:length(section_overlap)
         if abs(section_overlap(i,2) - section_overlap(i,1)) < round(frameRate*2)
-            section_overlap(i,:) = [];
-            matrixlength = matrixlength - 1; %update length   
+            section_overlap(i,:) = [0 0]; %set to zero   
         end
-        i = i + 1;
     end
+    section_overlap = nonzeros(section_overlap); %get nonzero values
+    section_overlap = reshape(section_overlap,[length(section_overlap)/2,2]); %reshape to nx2 matrix
     
     ppg_locs = cell(1,1);
     audio_locs = cell(1,1);
