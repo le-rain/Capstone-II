@@ -2,7 +2,7 @@
 %returns indices of sections with consecutive good waves
 %each row is a different section
 %colummn 1 is start index, column 2 is end index of individual section
-function [section_indices] = identifySectionsTM(istart, istop)
+function [section_indices,ppg_sections] = identifySectionsTM(istart,istop)
 
     %identify indices of "good" waveforms close in proximity 
     consec = zeros(1,2); %initialize array to store indices 
@@ -43,4 +43,13 @@ function [section_indices] = identifySectionsTM(istart, istop)
         section_indices(i,2) = sections{i}(end,2); %end index
     end
     
+    ppg_sections = zeros(1,2);
+    j = 1; 
+    for i = 1:length(section_indices) %for every section 
+        if abs(section_indices(i,2) - section_indices(i,1)) >= 100
+            ppg_sections(j,1) = section_indices(i,1);
+            ppg_sections(j,2) = section_indices(i,2);
+            j = j + 1;
+        end
+    end
 end

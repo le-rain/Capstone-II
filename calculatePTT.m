@@ -1,5 +1,5 @@
-%integrates ppgTM and audioPulse to calculate PTT from best sections of both
-%signals
+%integrates ppgTM and audioPulse to calculate PTT from best sections of 
+%both signals
 function [section_overlap,ppg_locs,audio_locs,ptt] = calculatePTT(ppg_sections,sectionI,ppg_tm,audioData,frameRate,Fs)
     [p,q] = rat(frameRate/Fs); %factor for converting between video and audio sampling frequencies
     audio_sections = round(sectionI.*p./q); %resample audio indices 
