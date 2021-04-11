@@ -3,14 +3,23 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.Button;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 // Activity class for the first direction view.
 public class Direction2Activity extends AppCompatActivity {
+
+    Button readyBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.direction2);
+
+        readyBtn = findViewById(R.id.buttonNext3);
+        readyBtn.setOnClickListener(v -> startActivity(new Intent(Direction2Activity.this,
+                CameraActivity.class)));
     }
 
     @Override
@@ -35,7 +44,7 @@ public class Direction2Activity extends AppCompatActivity {
         int keyCode = event.getKeyCode();
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && action == KeyEvent.ACTION_UP) {
-            startActivity(new Intent(Direction2Activity.this, RecordActivity.class));
+            startActivity(new Intent(Direction2Activity.this, CameraActivity.class));
             return true;
         }
         return super.dispatchKeyEvent(event);
