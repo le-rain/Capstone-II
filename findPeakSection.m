@@ -64,7 +64,11 @@ if any(gap == 1) == 1
             tend = [tend; {time(i)}];
         end
     end
+else
+    tstart = time(1);
+    tend = time(length(time));
 end
+
 
 if iscell(tstart) == 1 || iscell(tend) ==1
     tstart = cell2mat(tstart);
