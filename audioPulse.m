@@ -9,7 +9,7 @@
 % sectionI is sections of audio in sample#
 % Fs is sampling frequency
 
-function [sectionT, sectionI, Fs] = audioPulse(audio, bpm)
+function [sectionT, sectionI, Fs, audioData] = audioPulse(audio, bpm)
 
 % Read audio from video and find peaks
 [audio, peaks, time, x, y, Fs, minDist] = findAudioPeaks(audio, bpm);
@@ -18,4 +18,7 @@ function [sectionT, sectionI, Fs] = audioPulse(audio, bpm)
 [sectionT] = findPeakSection(peaks, time);
 
 [sectionI] = plotAudioSection(sectionT, audio, x, y, Fs, minDist);
+
+audioData = y;
+
 end
