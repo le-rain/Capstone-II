@@ -1,6 +1,6 @@
 %integrates ppgTM and audioPulse to calculate PTT from best sections of 
 %both signals
-function [section_overlap,ppg_locs,audio_locs,ptt] = calculatePTT(ppg_sections,sectionI,ppg_tm,audioData,frameRate,Fs)
+function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,ptt] = calculatePTT(ppg_tm,audioData,ppg_sections,sectionI,frameRate,Fs)
     [p,q] = rat(frameRate/Fs); %factor for converting between video and audio sampling frequencies
     audio_sections = round(sectionI.*p./q); %resample audio indices 
     audio_data = resample(audioData,p,q); %resample audio data
@@ -38,16 +38,43 @@ function [section_overlap,ppg_locs,audio_locs,ptt] = calculatePTT(ppg_sections,s
         end
     end
     
+    %remove overlaps less than 2 seconds
+    matrixlength = length(section_overlap);
+    i = 1;
+    while i <= matrixlength
+        if abs(section_overlap(i,2) - section_overlap(i,1)) < round(frameRate*2)
+            section_overlap(i,:) = [];
+            matrixlength = matrixlength - 1; %update length   
+        end
+        i = i + 1;
+    end
+    
     ppg_locs = cell(1,1);
     audio_locs = cell(1,1);
-    ptt = cell(1,1);
+    ptt_calc = cell(1,1);
     for i = 1:length(section_overlap)
         %find locations of ppg peaks
         [~,ppg_locs{i,1}] = findpeaks(ppg_tm(section_overlap(i,1):(section_overlap(i,2))),'MinPeakDistance',15); 
         %find locations of audio peaks
         [~,audio_locs{i,1}] = findpeaks(audio_data(section_overlap(i,1):(section_overlap(i,2))),'MinPeakDistance',15); 
         %calculate ptt
-        ptt{i,1} = mean(abs(ppg_locs{i} - audio_locs{i}))/frameRate;
+        if length(ppg_locs{i,1}) ~= length(audio_locs{i,1}) %if number of peaks are unequal 
+            delta1 = abs(ppg_locs{i,1}(1) - audio_locs{i,1}(1)); %difference between first indices
+            delta2 = abs(ppg_locs{i,1}(end) - audio_locs{i,1}(end)); %difference between last indices
+            if delta1 > delta2 %delete last value from longer vector
+                if length(ppg_locs{i,1}) > length(audio_locs{i,1})
+                    ppg_locs{i,1}(end) = [];
+                else
+                    audio_locs{i,1}(end) = [];
+                end
+            elseif delta2 > delta1 %delete first value from longer vector
+                if length(ppg_locs{i,1}) > length(audio_locs{i,1})
+                    ppg_locs{i,1}(1) = [];
+                else
+                    audio_locs{i,1}(1) = [];
+                end
+        end
+        ptt_calc{i,1} = mean(abs(ppg_locs{i} - audio_locs{i}))/frameRate;
     end
-    ptt = mean(cell2mat(ptt)); %average all PTTs (if multiple were calculated)
+    ptt = mean(cell2mat(ptt_calc)); %average all PTTs (if multiple were calculated)
 end
