@@ -1,5 +1,5 @@
 % Call this function to find sections in audio with good consecutive peaks
-function [tstart, tstop] = audioPulse(audio, bpm)
+function [sectionT] = audioPulse(audio, bpm)
 
 % Read audio from video and find peaks
 [audio, peaks, time, x, y, Fs, minDist] = findAudioPeaks(audio, bpm);
