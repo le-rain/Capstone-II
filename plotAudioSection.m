@@ -1,4 +1,4 @@
-function plotAudioSection(sectionT, audio, x, y, Fs, minDist)
+function [sectionI] = plotAudioSection(sectionT, audio, x, y, Fs, minDist)
 
 [~,name,~] = fileparts(audio);
 
