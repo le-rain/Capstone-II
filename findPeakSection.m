@@ -5,7 +5,7 @@ function [sectionT] = findPeakSection(peaks, time)
 
 % Find average peak distance and upper and lower thresholds
 avgPeak1 = mean(peaks);
-upperPeaks = (peaks > avgPeak1);
+upperPeaks = (peaks > 1.5*avgPeak1);
 
 for i = 1:length(peaks)
     if upperPeaks(i) == 1
@@ -18,6 +18,7 @@ end
 peaks = nonzeros(peaks);
 time = nonzeros(time);
 
+%{
 % Find average peak distance and upper and lower thresholds
 avgPeak2 = mean(peaks);
 upperPeak = 5 * avgPeak2;
@@ -34,7 +35,7 @@ end
 % Remove zeros from peaks
 peaks = nonzeros(peaks);
 time = nonzeros(time);
-
+%}
 % Find average peak distance and lower threshold
 avgPeakDist = mean(diff(time));
 upperDist = 1.25 * avgPeakDist;
