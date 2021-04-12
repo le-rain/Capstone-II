@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="80dp"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,6 +28,7 @@
         android:text="Ready to take your blood pressure?"
         android:textSize="25sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +41,7 @@
         android:text="Please read all steps before beginning."
         android:textSize="18sp"
         android:textStyle="italic"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +57,7 @@
         android:text="Step 1"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introText" />
 
@@ -58,6 +71,7 @@
         android:layout_marginRight="50dp"
         android:text="Locate your phone's front camera and bottom microphone(s)."
         android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toEndOf="@+id/step1Text"
@@ -73,6 +87,7 @@
         android:text="Step 2"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepText1" />
 
@@ -86,6 +101,7 @@
         android:layout_marginRight="50dp"
         android:text="With the screen and bottom microphone facing you, place the tip of your right index finger over the front camera."
         android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/step1Text"
@@ -101,6 +117,7 @@
         android:text="Step 3"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepText2" />
 
@@ -115,6 +132,7 @@
         android:layout_weight="1"
         android:text="With your left hand, locate the pulse at the right side of your neck."
         android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/step1Text"
@@ -131,6 +149,7 @@
         android:text="Step 4"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepText3" />
 
@@ -144,6 +163,7 @@
         android:layout_marginRight="50dp"
         android:text="Place the bottom microphone over the location of the pulse."
         android:textSize="18sp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/step1Text"
@@ -160,6 +180,7 @@
         android:text="Step 5"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepText4" />
 
@@ -174,6 +195,7 @@
         android:text="When you are ready to begin the measurement, use your third finger to press the 'volume up' button. You will hear a tone when your measurement begins."
         android:textSize="16.5sp"
         android:textStyle="bold|italic"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/step1Text"
@@ -197,8 +219,21 @@
         android:layout_marginTop="5dp"
         android:text="Example of how to take measurement."
         android:textStyle="italic"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+    <Button
+        android:id="@+id/buttonNext3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Ready"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/figCaption" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
