@@ -59,7 +59,7 @@ tend = [];
 
 if any(gap == 1) == 1
     for i = 1:length(gap)
-        if gap(i) == 1
+        if gap(i) == 1 
             tstart = [tstart; {time(i+1)}];
             tend = [tend; {time(i)}];
         end
@@ -67,21 +67,26 @@ if any(gap == 1) == 1
 else
     tstart = time(1);
     tend = time(length(time));
-end
-
+end    
 
 if iscell(tstart) == 1 || iscell(tend) ==1
     tstart = cell2mat(tstart);
     tend = cell2mat(tend);
 end
 
-if length(tstart) > 1
+if tstart > tend
+    tstart = [tstart; {time(1)}];
+    tend = [tend; {time(length(time))}];
+    tstart = cell2mat(tstart);
+    tend = cell2mat(tend);
+    tstart = sort(tstart);
+    tend = sort(tend);
+elseif length(tstart) > 1
     tend(1) = 0;
     tstart(length(tstart)) = 0;
+    tstart = nonzeros(tstart);
+    tend = nonzeros(tend);
 end
-    
-tstart = nonzeros(tstart);
-tend = nonzeros(tend);
 
 for i = 1:length(tstart)
     if tstart(i) == tend(i)
