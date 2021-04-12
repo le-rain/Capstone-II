@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Cuffless BP"
+        android:layout_gravity="center_horizontal"
+        />
+    <Button
+        android:id="@+id/record"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Record"
+        />
+    <Button
+        android:id="@+id/process"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Process"
+        />
+
+    <Button
+        android:id="@+id/playback"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Play"
+        />
+
+    <Button
+        android:id="@+id/restart"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Back to Start"
+        />
+
+    <VideoView
+        android:id="@+id/videoview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+</LinearLayout>

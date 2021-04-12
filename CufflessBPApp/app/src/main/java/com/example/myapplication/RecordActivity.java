@@ -1,29 +1,20 @@
 package com.example.myapplication;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.io.IOException;
 
 public class RecordActivity extends AppCompatActivity {
     private static int VIDEO_REQUEST = 101;
@@ -68,7 +59,6 @@ public class RecordActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
     // starts recording if audio is permitted, or requests permission
     private void startRecording() throws IOException {
