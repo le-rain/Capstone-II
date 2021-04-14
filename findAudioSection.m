@@ -1,7 +1,7 @@
 % Call this function to find start and end incidces for best sections with
 % consecutive peaks
 
-function [sectionT] = findPeakSection(peaks, time)
+function [sectionT] = findAudioSection(peaks, time)
 
 % Find average peak distance and upper and lower thresholds
 avgPeak1 = mean(peaks);
