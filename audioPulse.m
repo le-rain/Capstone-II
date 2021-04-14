@@ -16,7 +16,7 @@ function [sectionT, sectionI, Fs, audioData, time] = audioPulse(audio, bpm, plot
 [audio, peaks, time, x, y, Fs, minDist] = findAudioPeaks(audio, bpm);
 
 % Find start and stop of good peak sections
-[sectionT] = findPeakSection(peaks, time);
+[sectionT] = findAudioSection(peaks, time);
 
 [sectionI] = plotAudioSection(sectionT, audio, x, y, Fs, minDist, plotOption);
 

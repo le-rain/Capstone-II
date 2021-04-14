@@ -6,12 +6,40 @@ sectionI = sectionT.*Fs;
 
 if plotOption == 1
  
+    figure
+    findpeaks(y, Fs, 'MinPeakDistance', minDist)
+    xlabel('Time (s)');
+    ylabel('Relative Sound Amplitude');
+    titlename = strcat("Audio Data for ", name);
+    title(titlename, 'FontSize', 15, 'FontWeight', 'bold');
+    ax = gca; 
+    ax.XAxis.FontSize = 10;
+    ax.YAxis.FontSize = 10;
+    ax.FontWeight = 'bold';  
+        
+    istart = round(sectionI(:,1));
+    iend = round(sectionI(:,2));
+
+elseif plotOption == 2
+ 
+    figure
+    findpeaks(y, Fs, 'MinPeakDistance', minDist)
+    xlabel('Time (s)');
+    ylabel('Relative Sound Amplitude');
+    titlename = strcat("Audio Data for ", name);
+    title(titlename, 'FontSize', 15, 'FontWeight', 'bold');
+    ax = gca; 
+    ax.XAxis.FontSize = 10;
+    ax.YAxis.FontSize = 10;
+    ax.FontWeight = 'bold';  
+        
     istart = round(sectionI(:,1));
     iend = round(sectionI(:,2));
 
     if numel(sectionI) == 2
         time = x(istart:iend);
         values = y(istart:iend);
+        figure
         plot(time, values)
         findpeaks(values, Fs, 'MinPeakDistance', minDist)
         xlabel('Time (s)');
