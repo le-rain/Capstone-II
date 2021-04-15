@@ -15,6 +15,38 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        packagingOptions {
+            pickFirst 'META-INF/native-image/android-x86/jnijavacpp/jni-config.json'
+            pickFirst 'META-INF/native-image/android-x86_64/jnijavacpp/reflect-config.json'
+            pickFirst 'META-INF/native-image/android-x86_64/jnijavacpp/jni-config.json'
+            pickFirst 'META-INF/native-image/android-arm64/jnijavacpp/reflect-config.json'
+            pickFirst 'META-INF/native-image/android-arm64/jnijavacpp/reflect-config.json'
+            pickFirst 'META-INF/native-image/android-arm/jnijavacpp/jni-config.json'
+            pickFirst 'META-INF/native-image/android-x86/jnijavacpp/reflect-config.json'
+            pickFirst 'META-INF/native-image/android-arm64/jnijavacpp/jni-config.json'
+            pickFirst 'META-INF/native-image/android-arm64/jnijavacpp/jni-config.json'
+            pickFirst 'META-INF/native-image/android-arm/jnijavacpp/reflect-config.json'
+            pickFirst 'org/bytedeco/javacpp/BoolPointer.java'
+            pickFirst 'org.bytedeco.javacpp.BoolPointer'
+            pickFirst 'org.bytedeco.javacpp.BooleanPointer'
+            pickFirst 'org.bytedeco.javacpp.BytePointer'
+            pickFirst 'org.bytedeco.javacpp.CharPointer'
+            pickFirst 'org.bytedeco.javacpp.ClassProperties'
+            pickFirst 'org.bytedeco.javacpp.CLongPointer'
+            pickFirst 'org.bytedeco.javacpp.DoublePointer'
+            pickFirst 'org.bytedeco.javacpp.FloatPointer'
+            pickFirst 'org.bytedeco.javacpp.FunctionPointer'
+            pickFirst 'org.bytedeco.javacpp.IntPointer'
+            pickFirst 'org.bytedeco.javacpp.Loader'
+            pickFirst 'org.bytedeco.javacpp.LongPointer'
+            pickFirst 'org.bytedeco.javacpp.Pointer'
+            pickFirst 'org.bytedeco.javacpp.PointerPointer'
+            pickFirst 'org.bytedeco.javacpp.PointerScope'
+            pickFirst 'org.bytedeco.javacpp.ShortPointer'
+            pickFirst 'org.bytedeco.javacpp.SizeTPointer'
+        }
     }
 
     buildTypes {
@@ -34,20 +66,207 @@ dependencies {
 //    implementation 'androidx.appcompat:appcompat:1.1.0'
 //    implementation 'com.google.android.material:material:1.1.0'
 //    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-//    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 //    implementation "androidx.core:core-ktx:+"
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+//    implementation group: 'org.bytedeco', name: 'javacpp', version: '1.5.3'
+//    implementation group: 'org.bytedeco', name: 'javacpp', version: '1.5.3', classifier: 'android-arm64'
+//    implementation group: 'org.bytedeco', name: 'javacpp', version: '1.5.3', classifier: 'android-x86_64'
+//    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.2.2-1.5.3'
+//    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.2.2-1.5.3', classifier: 'android-arm64'
+//    implementation group: 'org.bytedeco', name: 'ffmpeg', version: '4.2.2-1.5.3', classifier: 'android-x86_64'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation files('libs/artoolkitplus.jar')
+    implementation files('libs/artoolkitplus-android-arm.jar')
+    implementation files('libs/artoolkitplus-android-arm64.jar')
+    implementation files('libs/artoolkitplus-android-x86.jar')
+    implementation files('libs/artoolkitplus-android-x86_64.jar')
+//    implementation files('libs/artoolkitplus-linux-arm64.jar')
+//    implementation files('libs/artoolkitplus-linux-armhf.jar')
+//    implementation files('libs/ffmpeg-android-arm64.jar')
+//    implementation files('libs/artoolkitplus-platform.jar')
+//    implementation files('libs/artoolkitplus-windows-x86_64.jar')
+//    implementation files('libs/artoolkitplus-macosx-x86_64.jar')
+//    implementation files('libs/artoolkitplus-linux-x86.jar')
+//    implementation files('libs/ffmpeg-android-x86_64.jar')
+//    implementation files('libs/artoolkitplus-linux-ppc64le.jar')
+//    implementation files('libs/ffmpeg-linux-x86.jar')
+//    implementation files('libs/artoolkitplus-windows-x86.jar')
+//    implementation files('libs/ffmpeg-linux-ppc64le.jar')
+    //implementation files('libs/ffmpeg-linux-x86_64.jar')
+//    implementation files('libs/ffmpeg-android-x86.jar')
+//    //implementation files('libs/artoolkitplus-linux-x86_64.jar')
+//    implementation files('libs/ffmpeg-platform.jar')
+////    implementation files('libs/ffmpeg-linux-armhf.jar')
+//    implementation files('libs/ffmpeg.jar')
+////    implementation files('libs/ffmpeg-macosx-x86_64.jar')
+////    implementation files('libs/ffmpeg-linux-arm64.jar')
+//    implementation files('libs/ffmpeg-android-arm.jar')
+////    implementation files('libs/ffmpeg-windows-x86_64.jar')
+////    implementation files('libs/ffmpeg-windows-x86.jar')
+    implementation files('libs/flandmark-android-arm.jar')
+    implementation files('libs/flandmark.jar')
+    implementation files('libs/flandmark-android-arm64.jar')
+    implementation files('libs/flandmark-android-x86.jar')
+//    implementation files('libs/flandmark-linux-arm64.jar')
+    implementation files('libs/flandmark-android-x86_64.jar')
+//    implementation files('libs/flandmark-linux-armhf.jar')
+//    implementation files('libs/flandmark-linux-ppc64le.jar')
+//    implementation files('libs/flandmark-linux-x86.jar')
+    //implementation files('libs/flandmark-linux-x86_64.jar')
+//    implementation files('libs/flandmark-macosx-x86_64.jar')
+    implementation files('libs/flandmark-platform.jar')
+//    implementation files('libs/flandmark-windows-x86.jar')
+//    implementation files('libs/flandmark-windows-x86_64.jar')
+    implementation files('libs/flycapture.jar')
+//    implementation files('libs/flycapture-linux-arm64.jar')
+//    implementation files('libs/flycapture-linux-x86.jar')
+//    implementation files('libs/flycapture-linux-armhf.jar')
+    //implementation files('libs/flycapture-linux-x86_64.jar')
+    implementation files('libs/flycapture-platform.jar')
+//    implementation files('libs/flycapture-windows-x86.jar')
+//    implementation files('libs/flycapture-windows-x86_64.jar')
+    implementation files('libs/javacpp.jar')
+//    implementation files('libs/javacpp-android-arm.jar')
+//    implementation files('libs/javacpp-android-arm64.jar')
+//    implementation files('libs/javacpp-android-x86.jar')
+//    implementation files('libs/javacpp-android-x86_64.jar')
+//    implementation files('libs/javacpp-ios-arm64.jar')
+    //implementation files('libs/javacpp-ios-x86_64.jar')
+//    implementation files('libs/javacpp-linux-arm64.jar')
+//    implementation files('libs/javacpp-linux-armhf.jar')
+//    implementation files('libs/javacpp-linux-ppc64le.jar')
+//    implementation files('libs/javacpp-linux-x86.jar')
+    //implementation files('libs/javacpp-linux-x86_64.jar')
+//    implementation files('libs/javacpp-macosx-arm64.jar')
+//    implementation files('libs/javacpp-macosx-x86_64.jar')
+//    implementation files('libs/javacpp-platform.jar')
+//    implementation files('libs/javacpp-windows-x86.jar')
+//    implementation files('libs/javacpp-windows-x86_64.jar')
+    implementation files('libs/javacv.jar')
+    implementation files('libs/javacv-platform.jar')
+    implementation files('libs/leptonica.jar')
+    implementation files('libs/leptonica-android-arm.jar')
+    implementation files('libs/leptonica-android-arm64.jar')
+    implementation files('libs/leptonica-android-x86.jar')
+    implementation files('libs/leptonica-android-x86_64.jar')
+//    implementation files('libs/leptonica-linux-arm64.jar')
+//    implementation files('libs/leptonica-linux-armhf.jar')
+//    implementation files('libs/leptonica-linux-ppc64le.jar')
+//    implementation files('libs/leptonica-linux-x86.jar')
+    //implementation files('libs/leptonica-linux-x86_64.jar')
+//    implementation files('libs/leptonica-macosx-x86_64.jar')
+    implementation files('libs/leptonica-platform.jar')
+//    implementation files('libs/leptonica-windows-x86.jar')
+//    implementation files('libs/leptonica-windows-x86_64.jar')
+    implementation files('libs/libdc1394.jar')
+//    implementation files('libs/libdc1394-linux-arm64.jar')
+//    implementation files('libs/libdc1394-linux-armhf.jar')
+//    implementation files('libs/libdc1394-linux-ppc64le.jar')
+//    implementation files('libs/libdc1394-linux-x86.jar')
+    //implementation files('libs/libdc1394-linux-x86_64.jar')
+//    implementation files('libs/libdc1394-macosx-x86_64.jar')
+//    implementation files('libs/libdc1394-platform.jar')
+//    implementation files('libs/libdc1394-windows-x86.jar')
+//    implementation files('libs/libdc1394-windows-x86_64.jar')
+    implementation files('libs/libfreenect.jar')
+//    implementation files('libs/libfreenect2-linux-x86.jar')
+    //implementation files('libs/libfreenect2-linux-x86_64.jar')
+//    implementation files('libs/libfreenect2-macosx-x86_64.jar')
+//    implementation files('libs/libfreenect2-platform.jar')
+//    implementation files('libs/libfreenect2-windows-x86_64.jar')
+//    implementation files('libs/libfreenect-linux-arm64.jar')
+//    implementation files('libs/libfreenect-linux-armhf.jar')
+//    implementation files('libs/libfreenect-linux-ppc64le.jar')
+//    implementation files('libs/libfreenect-linux-x86.jar')
+    //implementation files('libs/libfreenect-linux-x86_64.jar')
+//    implementation files('libs/libfreenect-macosx-x86_64.jar')
+    implementation files('libs/libfreenect-platform.jar')
+//    implementation files('libs/libfreenect-windows-x86.jar')
+//    implementation files('libs/libfreenect-windows-x86_64.jar')
+    implementation files('libs/librealsense.jar')
+    implementation files('libs/librealsense2.jar')
+//    implementation files('libs/librealsense2-linux-arm64.jar')
+//    implementation files('libs/librealsense2-linux-armhf.jar')
+//    implementation files('libs/librealsense2-linux-x86.jar')
+    //implementation files('libs/librealsense2-linux-x86_64.jar')
+//    implementation files('libs/librealsense2-macosx-x86_64.jar')
+//    implementation files('libs/librealsense2-platform.jar')
+//    implementation files('libs/librealsense2-windows-x86.jar')
+//    implementation files('libs/librealsense2-windows-x86_64.jar')
+//    implementation files('libs/librealsense-linux-arm64.jar')
+//    implementation files('libs/librealsense-linux-armhf.jar')
+//    implementation files('libs/librealsense-linux-x86.jar')
+    //implementation files('libs/librealsense-linux-x86_64.jar')
+//    implementation files('libs/librealsense-macosx-x86_64.jar')
+//    implementation files('libs/librealsense-platform.jar')
+//    implementation files('libs/librealsense-windows-x86.jar')
+//    implementation files('libs/librealsense-windows-x86_64.jar')
+    implementation files('libs/openblas.jar')
+    implementation files('libs/openblas-android-arm.jar')
+    implementation files('libs/openblas-android-arm64.jar')
+    implementation files('libs/openblas-android-x86.jar')
+    implementation files('libs/openblas-android-x86_64.jar')
+    //implementation files('libs/openblas-ios-arm64.jar')
+    //implementation files('libs/openblas-ios-x86_64.jar')
+//    implementation files('libs/openblas-linux-arm64.jar')
+//    implementation files('libs/openblas-linux-armhf.jar')
+//    implementation files('libs/openblas-linux-ppc64le.jar')
+//    implementation files('libs/openblas-linux-x86.jar')
+    //implementation files('libs/openblas-linux-x86_64.jar')
+//    implementation files('libs/openblas-macosx-x86_64.jar')
+    implementation files('libs/openblas-platform.jar')
+//    implementation files('libs/openblas-windows-x86.jar')
+//    implementation files('libs/openblas-windows-x86_64.jar')
+    implementation files('libs/opencv.jar')
+    implementation files('libs/opencv-android-arm.jar')
+    implementation files('libs/opencv-android-arm64.jar')
+    implementation files('libs/opencv-android-x86.jar')
+    implementation files('libs/opencv-android-x86_64.jar')
+//    implementation files('libs/opencv-ios-arm64.jar')
+//    implementation files('libs/opencv-linux-arm64.jar')
+    //implementation files('libs/opencv-ios-x86_64.jar')
+//    implementation files('libs/opencv-linux-armhf.jar')
+//    implementation files('libs/opencv-linux-ppc64le.jar')
+//    implementation files('libs/opencv-linux-x86.jar')
+//    //implementation files('libs/opencv-linux-x86_64.jar')
+//    implementation files('libs/opencv-macosx-x86_64.jar')
+    implementation files('libs/opencv-platform.jar')
+//    implementation files('libs/opencv-windows-x86.jar')
+//    implementation files('libs/opencv-windows-x86_64.jar')
+    implementation files('libs/tesseract.jar')
+    implementation files('libs/tesseract-android-arm.jar')
+    implementation files('libs/tesseract-android-arm64.jar')
+    implementation files('libs/tesseract-android-x86.jar')
+    implementation files('libs/tesseract-android-x86_64.jar')
+//    implementation files('libs/tesseract-linux-arm64.jar')
+//    implementation files('libs/tesseract-linux-armhf.jar')
+//    implementation files('libs/tesseract-linux-ppc64le.jar')
+//    implementation files('libs/tesseract-linux-x86.jar')
+    //implementation files('libs/tesseract-linux-x86_64.jar')
+//    implementation files('libs/tesseract-macosx-x86_64.jar')
+    implementation files('libs/tesseract-platform.jar')
+//    implementation files('libs/tesseract-windows-x86.jar')
+//    implementation files('libs/tesseract-windows-x86_64.jar')
+    implementation files('libs/videoinput.jar')
+    implementation files('libs/videoinput-platform.jar')
+//    implementation files('libs/videoinput-windows-x86.jar')
+//    implementation files('libs/videoinput-windows-x86_64.jar')
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //implementation project(path: ':sdk')
     apply plugin: 'kotlin-android-extensions'
+    implementation 'com.android.support:multidex:1.0.3'
+
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

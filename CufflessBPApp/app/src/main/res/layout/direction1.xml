@@ -70,7 +70,7 @@
             android:layout_marginRight="50dp"
             android:gravity="center"
             android:inputType="textMultiLine"
-            android:text="The measurement will last 60 seconds. \n Please stay as still as possible and take deep breathes."
+            android:text="The measurement will last 30 seconds. \n Please stay as still as possible."
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="italic"
