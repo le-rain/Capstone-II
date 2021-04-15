@@ -192,7 +192,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
-        android:text="When you are ready to begin the measurement, use your third finger to press the 'volume up' button. You will hear a tone when your measurement begins."
+        android:text="When you are ready to begin the measurement, use your third finger to press the 'volume up' button. Please record for about 30 seconds."
         android:textSize="16.5sp"
         android:textStyle="bold|italic"
         android:textColor="@color/black"

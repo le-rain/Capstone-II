@@ -87,16 +87,11 @@
         android:id="@+id/buttonNext1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="58dp"
-        android:layout_marginLeft="58dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginTop="64dp"
         android:gravity="center"
         android:text="Next"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/skipButton"
-        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputWeight" />
 
@@ -123,13 +118,13 @@
         android:id="@+id/skipButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="58dp"
-        android:layout_marginRight="58dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Skip Instructions"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonNext1" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonNext1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
