@@ -21,7 +21,7 @@ audioData = y;
 [iStart, iEnd] = findAudioSection(peaks, nSamples, Fs);
 
 % Find s1 and s2 peaks
-[sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, Fs, minDist);
+[sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, minDist);
 
 % Plot audio sections with s1 and s2 peaks
 plotAudioSection(sectionS1, sectionS2, iStart, iEnd, name, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption);

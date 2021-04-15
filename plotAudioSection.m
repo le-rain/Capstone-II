@@ -18,7 +18,7 @@ if plotAudioSectionOption == 1 % choose this option to plot audio sections
                 
         sectionValue = y(iStart(i):iEnd(i));
         binOne = findBinOne(sectionValue, 100);
-        [~, ~] = plotSection(sectionValue, Fs, minDist, binOne);
+        plotSection(sectionValue, Fs, minDist, binOne);
         hold on
         
         s1 = sectionS1{1,i};

@@ -1,4 +1,4 @@
-function [sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, Fs, minDist)
+function [sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, minDist)
 
 sectionS1 = cell(1, length(iStart));
 sectionS2 = cell(1, length(iStart));
@@ -28,7 +28,7 @@ for i = 1:length(iStart) %for every section
     s2 = [];
     
     % Loop for identifying and appending S1 and S2 peaks
-    for k = 3:(length(sampleN))
+    for k = 3:(length(sampleN))-1
         if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist
             s1 = [s1; {sampleN(k) peaks(k)}];
             s2 = [s2; {sampleN(k+1) peaks(k+1)}];
