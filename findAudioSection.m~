@@ -1,7 +1,7 @@
 % Call this function to find start and end incidces for best sections with
 % consecutive peaks
 
-function [iStart, iEnd] = findAudioSection(peaks, nSamples, Fs)
+function [sectionI, iStart, iEnd] = findAudioSection(peaks, nSamples)
 
 % Find average peak distance and upper and lower thresholds
 avgPeak = mean(peaks);
@@ -21,7 +21,7 @@ nSamples = nonzeros(nSamples);
 
 % Find average peak distance and lower threshold
 avgPeakDist = mean(diff(nSamples));
-upperDist = 1.45*avgPeakDist;
+upperDist = 1.5*avgPeakDist;
 
 % Initialize section lists
 timeDiff = [];
@@ -55,19 +55,12 @@ if iscell(iStart) == 1 || iscell(iEnd) ==1
     iEnd = cell2mat(iEnd);
 end
 
-if iStart > iEnd
-    iStart = [iStart; {nSamples(1)}];
-    iEnd = [iEnd; {nSamples(length(nSamples))}];
-    iStart = cell2mat(iStart);
-    iEnd = cell2mat(iEnd);
-    iStart = sort(iStart);
-    iEnd = sort(iEnd);
-elseif length(iStart) > 1
-    iEnd(1) = 0;
-    iStart(length(iStart)) = 0;
-    iStart = nonzeros(iStart);
-    iEnd = nonzeros(iEnd);
-end
+iStart = [iStart; {nSamples(1)}];
+iEnd = [iEnd; {nSamples(length(nSamples))}];
+iStart = cell2mat(iStart);
+iEnd = cell2mat(iEnd);
+iStart = sort(iStart);
+iEnd = sort(iEnd);
 
 for i = 1:length(iStart)
     if iStart(i) == iEnd(i)
@@ -81,7 +74,7 @@ iEnd = nonzeros(iEnd);
 
 % Remove sections that are less than 1.5 sec
 for i = 1:length(iStart)
-    if iEnd(i) - iStart(i) < 1.5*Fs
+    if iEnd(i) - iStart(i) < 1.5
         iStart(i) = 0;
         iEnd(i) = 0;
     end
@@ -89,5 +82,7 @@ end
 
 iStart = nonzeros(iStart);
 iEnd = nonzeros(iEnd);
+
+sectionI = [iStart, iEnd];
 
 end
