@@ -36,11 +36,19 @@ for i = 1:length(iStart) %for every section
         if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist
             s1 = [s1; {sampleN(k-2) peaks(k-2)}];
             s2 = [s2; {sampleN(k-1) peaks(k-1)}];
-        end
+        end                
     end
     
-    sectionS1{1, i} = s1;
-    sectionS2{1, i} = s2;
+    s1 = cell2mat(s1);    
+    s2 = cell2mat(s2);    
+    
+    S1(:,1) = unique(s1(:,1), 'stable');
+    S1(:,2) = unique(s1(:,2), 'stable');
+    S2(:,1) = unique(s2(:,1), 'stable');
+    S2(:,2) = unique(s2(:,2), 'stable');
+    
+    sectionS1{1, i} = S1;
+    sectionS2{1, i} = S2;
 
 end
 

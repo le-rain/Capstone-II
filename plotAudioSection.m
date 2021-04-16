@@ -24,10 +24,6 @@ if plotAudioSectionOption == 1 % choose this option to plot audio sections
         s1 = sectionS1{1,i};
         s2 = sectionS2{1,i};
         
-        % Convert S1 and S2 lists from cells to array        
-        s1 = cell2mat(s1);
-        s2 = cell2mat(s2);
-        
         s1s = (s1(:,1));
         s1p = (s1(:,2));
         s2s = (s2(:,1));
