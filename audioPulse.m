@@ -2,24 +2,29 @@
 
 % Inputs:
 % audio is name of audio files in this format: 'File/filename.ext'
-% bpm is estimated BPM
-% plotOption -> 1 for graphs, 0 for no graphs
+% plotWholeAudioOption: 1 for plot of entire audio file, 0 for no plot
+% plotAudioSectionOption: 1 for plotting sections, 0 for no plots
 
 % Outputs:
-% sectionT is sections of audio in seconds
-% sectionI is sections of audio in sample#
+% sectionS2 is a cell array containing the good sections' s2 peaks
 % Fs is sampling frequency
+% audioData is audio data that has been squared
 
-function [sectionT, sectionI, Fs, audioData, time] = audioPulse(audio, bpm, plotOption)
+function [sectionS2, Fs, audioData] = audioPulse(audio, plotWholeAudioOption, plotAudioSectionOption)
 
 % Read audio from video and find peaks
-[audio, peaks, time, x, y, Fs, minDist] = findAudioPeaks(audio, bpm);
-
-% Find start and stop of good peak sections
-[sectionT] = findAudioSection(peaks, time);
-
-[sectionI] = plotAudioSection(sectionT, audio, x, y, Fs, minDist, plotOption);
+[name, peaks, nSamples, y, Fs, minDist] = findAudioPeaks(audio);
 
 audioData = y;
+
+% Find start and stop of good peak sections
+[iStart, iEnd] = findAudioSection(peaks, nSamples, Fs);
+
+% Find s1 and s2 peaks
+[sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, minDist);
+
+% Plot audio sections with s1 and s2 peaks
+plotAudioSection(sectionS1, sectionS2, iStart, iEnd, name, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption);
+
 
 end

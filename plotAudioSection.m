@@ -1,72 +1,53 @@
-function [sectionI] = plotAudioSection(sectionT, audio, x, y, Fs, minDist, plotOption)
+function plotAudioSection(sectionS1, sectionS2, iStart, iEnd, name, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption)
 
-[~,name,~] = fileparts(audio);
+minDist = minDist / Fs;
 
-sectionI = sectionT.*Fs;
-
-if plotOption == 1
- 
-    figure
-    findpeaks(y, Fs, 'MinPeakDistance', minDist)
-    xlabel('Time (s)');
-    ylabel('Relative Sound Amplitude');
+if plotWholeAudioOption == 1 % choose this option to plot the whole audio file 
+    
+    sectionValue = y;
+    binOne = findBinOne(y, 100);
+    plotSection(sectionValue, Fs, minDist, binOne);
     titlename = strcat("Audio Data for ", name);
-    title(titlename, 'FontSize', 15, 'FontWeight', 'bold');
-    ax = gca; 
-    ax.XAxis.FontSize = 10;
-    ax.YAxis.FontSize = 10;
-    ax.FontWeight = 'bold';  
-        
-    istart = round(sectionI(:,1));
-    iend = round(sectionI(:,2));
+    title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
 
-elseif plotOption == 2
- 
-    figure
-    findpeaks(y, Fs, 'MinPeakDistance', minDist)
-    xlabel('Time (s)');
-    ylabel('Relative Sound Amplitude');
-    titlename = strcat("Audio Data for ", name);
-    title(titlename, 'FontSize', 15, 'FontWeight', 'bold');
-    ax = gca; 
-    ax.XAxis.FontSize = 10;
-    ax.YAxis.FontSize = 10;
-    ax.FontWeight = 'bold';  
+end
         
-    istart = round(sectionI(:,1));
-    iend = round(sectionI(:,2));
+if plotAudioSectionOption == 1 % choose this option to plot audio sections 
+    
+    for i = 1:length(iStart) %for every section 
+                
+        sectionValue = y(iStart(i):iEnd(i));
+        binOne = findBinOne(sectionValue, 100);
+        plotSection(sectionValue, Fs, minDist, binOne);
+        hold on
+        
+        s1 = sectionS1{1,i};
+        s2 = sectionS2{1,i};
+        
+        % Convert S1 and S2 lists from cells to array        
+        s1 = cell2mat(s1);
+        s2 = cell2mat(s2);
+        
+        s1s = (s1(:,1));
+        s1p = (s1(:,2));
+        s2s = (s2(:,1));
+        s2p = (s2(:,2));
+        
+        s1t = s1s / Fs;
+        s2t = s2s / Fs;
+        
+        plot(s1t, s1p, 'r.')
+        plot(s2t, s2p, '.')
+                
+        titlename = strcat("Section ", int2str(i), " for ", name); %title "Section n"
+        title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
+        
+        hold off
+        
+        legend('Audio Data','Detected Peaks', 'S1', 'S2')
 
-    if numel(sectionI) == 2
-        time = x(istart:iend);
-        values = y(istart:iend);
-        figure
-        plot(time, values)
-        findpeaks(values, Fs, 'MinPeakDistance', minDist)
-        xlabel('Time (s)');
-        ylabel('Relative Sound Amplitude');
-        titlename = strcat("Section for ", name);
-        title(titlename, 'FontSize', 15, 'FontWeight', 'bold');
-        ax = gca; 
-        ax.XAxis.FontSize = 10;
-        ax.YAxis.FontSize = 10;
-        ax.FontWeight = 'bold';   
-    elseif numel(sectionI) > 2
-        for i = 1:length(sectionI) %for every section 
-                figure %create new figure
-                time = x(istart(i):iend(i));
-                values = y(istart(i):iend(i));
-                plot(time, values)
-                findpeaks(values, Fs, 'MinPeakDistance', minDist)
-                xlabel('Time (s)');
-                ylabel('Relative Sound Amplitude');
-                titlename = strcat("Section ", int2str(i), " for ", name); %title "Section n"
-                title(titlename, 'FontSize', 15, 'FontWeight', 'bold');
-                ax = gca; 
-                ax.XAxis.FontSize = 10;
-                ax.YAxis.FontSize = 10;
-                ax.FontWeight = 'bold';    
-         end
     end
+   
 end
 
 end

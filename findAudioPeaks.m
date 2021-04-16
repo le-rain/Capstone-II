@@ -1,23 +1,17 @@
 % Call this function to find peaks for audio files
-function [audio, peaks, time, x, y, Fs, minDist] = findAudioPeaks(audio, bpm)
-
-% Find minimum peak distance with bpm
-minDist = 60/bpm - 0.05;
+function [name, peaks, nSamples, y, Fs, minDist] = findAudioPeaks(audio)
 
 % Values (y) and sample rate (Fs) for file 
 [y, Fs] = audioread(audio);
+[~,name,~] = fileparts(audio);
 
-% Use second channel/right channel
-y = y(:,2);
+% Find minimum peak distance with bpm
+minDist = (60/300 - 0.05) * Fs;
 
-% Square audio values to make peaks more prominent
-y = y.^2;
-
-% Convert x values from number of samples to seconds
-n = 1:length(y);
-x = n' ./ Fs;
+% Use second channel/right channel and square audio values
+y = y(:,2).^2;
 
 % Find peaks with minimum distance of entered BPM
-[peaks, time] = findpeaks(y, Fs, 'MinPeakDistance', minDist);
+[peaks, nSamples] = findpeaks(y, 'MinPeakDistance', minDist);
 
 end

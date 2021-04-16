@@ -11,24 +11,37 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.VideoView
 import java.io.File
+import java.text.SimpleDateFormat
 
 const val REQUEST_VIDEO_CAPTURE = 1
 const val CHOOSE_VIDEO = 2
-
 
 class CameraActivity : Activity() {
     //    private var mCamera: Camera? = null
 //    private var mPreview: SurfaceView? = null
 //    private var mediaRecorder: MediaRecorder? = null // media recorder object (records video)
     private var videoView: VideoView? = null
-    private var videoUri: Uri? = null
+    var videoUri: Uri? = null
+    var vidUri: Uri? = null;
     private var videoProcessor: VideoProcessor? = null
-//    private lateinit var currentPhotoPath: String
+
+    var mediaFile: File = File(Environment.getExternalStorageDirectory().getAbsolutePath()
+    + "/myvideo.mp4");
+
+    var intent2: Intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
+    var videoUri2: Uri = Uri.fromFile(mediaFile)
+
+//    intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
+//    startActivityForResult(intent, VIDEO_CAPTURE);
+
+//    private late init var currentPhotoPath: String
 
     // initializes layout, camera, preview surface (preview of video), and capture button info
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,8 +95,15 @@ class CameraActivity : Activity() {
                     startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE)
                 }
             }
+            vidUri = VidProcessor.getOutputVideoUri();
+            if (vidUri != null) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, vidUri);
+            }
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+            print("video URI capture button: " + videoUri.toString())
         }
 
+        // onClick listener for restart button
         val restartButton: Button = findViewById(R.id.restart)
         restartButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
@@ -113,7 +133,9 @@ class CameraActivity : Activity() {
                 videoUri = intent?.data
 //                currentPhotoPath = videoURI?.path.toString()
             }
-            galleryAddVideo() // adds video to gallery
+            print("video URI: " + videoUri.toString())
+            //galleryAddVideo() // adds video to gallery
+            VidProcessor.readVid(vidUri.toString());
         }
 
 //        else if (requestCode == CHOOSE_VIDEO && resultCode == RESULT_OK){
@@ -134,9 +156,7 @@ class CameraActivity : Activity() {
             val f = File(videoUri.toString()) //
 
             Log.d(TAG, Uri.fromFile(f).toString())
-
             mediaScanIntent.data = Uri.fromFile(f)
-
             sendBroadcast(mediaScanIntent)
         }
     }
@@ -147,6 +167,7 @@ class CameraActivity : Activity() {
         intent.action = Intent.ACTION_PICK
         startActivityForResult(Intent.createChooser(intent, "Select Video"), CHOOSE_VIDEO)
     }
+
 
 //    fun playVideoInDevicePlayer() {
 //        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(currentPhotoPath))
@@ -274,3 +295,4 @@ class CameraActivity : Activity() {
 //        mCamera = null
 //    }
 }
+
