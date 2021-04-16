@@ -3,12 +3,12 @@ function [sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, minDist)
 sectionS1 = cell(1, length(iStart));
 sectionS2 = cell(1, length(iStart));
 
-
 for i = 1:length(iStart) %for every section 
 
     sectionValue = y(iStart(i):iEnd(i));
     binOne = findBinOne(sectionValue, 100);
     [peaks, sampleN] = findpeaks(sectionValue, 'MinPeakDistance', minDist, 'MinPeakProminence', binOne);
+    findpeaks(sectionValue, 'MinPeakDistance', minDist, 'MinPeakProminence', binOne);
     
     % Find average peak distance in audio sections to identify S1 and S2 peaks 
     avg_dist = mean(diff(sampleN));
@@ -39,13 +39,17 @@ for i = 1:length(iStart) %for every section
         end                
     end
     
-    s1 = cell2mat(s1);    
-    s2 = cell2mat(s2);    
+    s1 = cell2table(s1);    
+    s2 = cell2table(s2); 
+
+    [~,ia,~] = unique(s1(:,1:2),'rows');
+    S1 = s1(ia,:);
     
-    S1(:,1) = unique(s1(:,1), 'stable');
-    S1(:,2) = unique(s1(:,2), 'stable');
-    S2(:,1) = unique(s2(:,1), 'stable');
-    S2(:,2) = unique(s2(:,2), 'stable');
+    [~,ib,~] = unique(s2(:,1:2),'rows');
+    S2 = s2(ib,:);
+    
+    S1 = table2cell(S1);
+    S2 = table2cell(S2);
     
     sectionS1{1, i} = S1;
     sectionS2{1, i} = S2;
