@@ -36,8 +36,8 @@ if plotAudioSectionOption == 1 % choose this option to plot audio sections
         s1t = s1s / Fs;
         s2t = s2s / Fs;
         
-        plot(s1t, s1p, 'r.')
-        plot(s2t, s2p, '.')
+        plot(s1t, s1p, 'r.', 'MarkerSize', 15)
+        plot(s2t, s2p, '.', 'MarkerSize', 15)
                 
         titlename = strcat("Section ", int2str(i), " for ", name); %title "Section n"
         title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
