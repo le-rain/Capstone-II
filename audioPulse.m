@@ -10,7 +10,7 @@
 % Fs is sampling frequency
 % audioData is audio data that has been squared
 
-function [sectionS2, Fs, audioData] = audioPulse(audio, plotWholeAudioOption, plotAudioSectionOption)
+function [sectionI, sectionS2, Fs, audioData] = audioPulse(audio, plotWholeAudioOption, plotAudioSectionOption)
 
 % Read audio from video and find peaks
 [name, peaks, nSamples, y, Fs, minDist] = findAudioPeaks(audio);
@@ -18,7 +18,7 @@ function [sectionS2, Fs, audioData] = audioPulse(audio, plotWholeAudioOption, pl
 audioData = y;
 
 % Find start and stop of good peak sections
-[iStart, iEnd] = findAudioSection(peaks, nSamples, Fs);
+[sectionI, iStart, iEnd] = findAudioSection(peaks, nSamples, Fs);
 
 % Find s1 and s2 peaks
 [sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, minDist);
