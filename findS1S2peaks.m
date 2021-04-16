@@ -33,6 +33,10 @@ for i = 1:length(iStart) %for every section
             s1 = [s1; {sampleN(k) peaks(k)}];
             s2 = [s2; {sampleN(k+1) peaks(k+1)}];
         end
+        if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist
+            s1 = [s1; {sampleN(k-2) peaks(k-2)}];
+            s2 = [s2; {sampleN(k-1) peaks(k-1)}];
+        end
     end
     
     sectionS1{1, i} = s1;
