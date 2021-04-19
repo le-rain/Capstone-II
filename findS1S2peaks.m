@@ -1,4 +1,4 @@
-function [sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, y, minDist)
+function [allS1, allS2, sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, x, y, minDist)
 
 sectionS1 = cell(1, length(iStart));
 sectionS2 = cell(1, length(iStart));
@@ -6,9 +6,9 @@ sectionS2 = cell(1, length(iStart));
 for i = 1:length(iStart) %for every section 
 
     sectionValue = y(iStart(i):iEnd(i));
+    sectionSample = x(iStart(i):iEnd(i));
     binOne = findBinOne(sectionValue, 100);
-    [peaks, sampleN] = findpeaks(sectionValue, 'MinPeakDistance', minDist, 'MinPeakProminence', binOne);
-    findpeaks(sectionValue, 'MinPeakDistance', minDist, 'MinPeakProminence', binOne);
+    [peaks, sampleN] = findpeaks(sectionValue, sectionSample, 'MinPeakDistance', minDist, 'MinPeakProminence', binOne);
     
     % Find average peak distance in audio sections to identify S1 and S2 peaks 
     avg_dist = mean(diff(sampleN));
@@ -30,12 +30,12 @@ for i = 1:length(iStart) %for every section
     % Loop for identifying and appending S1 and S2 peaks
     for k = 3:(length(sampleN))-1
         if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist
-            s1 = [s1; {sampleN(k) peaks(k)}];
-            s2 = [s2; {sampleN(k+1) peaks(k+1)}];
+            s1 = [s1; {sampleN(k), peaks(k)}];
+            s2 = [s2; {sampleN(k+1), peaks(k+1)}];
         end
         if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist
-            s1 = [s1; {sampleN(k-2) peaks(k-2)}];
-            s2 = [s2; {sampleN(k-1) peaks(k-1)}];
+            s1 = [s1; {sampleN(k-2), peaks(k-2)}];
+            s2 = [s2; {sampleN(k-1), peaks(k-1)}];
         end                
     end
     
@@ -53,7 +53,20 @@ for i = 1:length(iStart) %for every section
     
     sectionS1{1, i} = S1;
     sectionS2{1, i} = S2;
-
+    
+    allS1 = [];
+    allS2 = [];
+    
+    for l = 1:length(sectionS2)
+        for m = 1:length(sectionS2{1,l})
+            allS1 = [allS1; {sectionS1{1,l}{m,1} sectionS1{1,l}{m,2}}];
+            allS2 = [allS2; {sectionS2{1,l}{m,1} sectionS2{1,l}{m,2}}];
+        end
+    end
+    
+    allS1 = cell2mat(allS1);
+    allS2 = cell2mat(allS2);
+    
 end
 
 end
