@@ -130,7 +130,7 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:layout_weight="1"
-        android:text="With your left hand, locate the pulse at the right side of your neck."
+        android:text="With your left hand, locate the pulse between your collarbones on your neck."
         android:textSize="18sp"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
@@ -192,48 +192,47 @@
         android:layout_marginLeft="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
-        android:text="When you are ready to begin the measurement, use your third finger to press the 'volume up' button. Please record for about 30 seconds."
+        android:text="When you are ready to begin the measurement, use your third/ring finger to press the 'volume up' button. Please record for about 30 seconds. You may use two hands."
         android:textSize="16.5sp"
-        android:textStyle="bold|italic"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/step1Text"
         app:layout_constraintTop_toTopOf="@+id/step5Text" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="274dp"
-        android:layout_height="290dp"
-        android:layout_marginTop="20dp"
-        android:foregroundGravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepText5"
-        app:srcCompat="@drawable/positionex" />
 
     <TextView
         android:id="@+id/figCaption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="12dp"
         android:text="Example of how to take measurement."
-        android:textStyle="italic"
         android:textColor="@color/black"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <Button
         android:id="@+id/buttonNext3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:text="Ready"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/figCaption" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="317dp"
+        android:layout_height="228dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepText5"
+        app:srcCompat="@drawable/positionex" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

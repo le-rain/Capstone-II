@@ -24,7 +24,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="text"
-        android:text="Welcome!"
+        android:text="Welcome to BEET!"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -101,14 +101,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:gravity="center"
         android:inputType="textMultiLine"
         android:text="Please enter some information \n about yourself for the best \n results."
-        android:textSize="25sp"
         android:textColor="@color/black"
+        android:textSize="25sp"
         android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,6 +131,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="162dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skipButton"
+        app:srcCompat="@drawable/beet" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

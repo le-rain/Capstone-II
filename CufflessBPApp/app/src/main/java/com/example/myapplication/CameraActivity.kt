@@ -95,18 +95,24 @@ class CameraActivity : Activity() {
                     startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE)
                 }
             }
-            vidUri = VidProcessor.getOutputVideoUri();
-            if (vidUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, vidUri);
-            }
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
-            print("video URI capture button: " + videoUri.toString())
+//            vidUri = VidProcessor.getOutputVideoUri();
+//            if (vidUri != null) {
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, vidUri);
+//            }
+//            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+//            print("video URI capture button: " + videoUri.toString())
         }
 
         // onClick listener for restart button
         val restartButton: Button = findViewById(R.id.restart)
         restartButton.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+        }
+
+        val processButton: Button = findViewById(R.id.process)
+        processButton.setOnClickListener{
+            val intent = Intent(this,ResultsActivity::class.java)
             startActivity(intent);
         }
 

@@ -41,9 +41,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CameraActivity">
+        <activity android:name=".CameraActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.CAMERA" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ResultsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.RESULTS" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

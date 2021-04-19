@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         inputHeight = findViewById(R.id.inputHeight);
         inputWeight = findViewById(R.id.inputWeight);
 
-
         btn = findViewById(R.id.buttonNext1);
         skipBtn = findViewById(R.id.skipButton);
 
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     // displays message if user does not fill in all fields
@@ -85,21 +85,6 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(context, text, duration);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
 

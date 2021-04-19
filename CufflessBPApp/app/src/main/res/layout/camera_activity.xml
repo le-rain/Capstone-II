@@ -8,7 +8,9 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Cuffless BP"
+        android:text="@string/app_name"
+        android:textSize="25dp"
+        android:textColor="@color/black"
         android:layout_gravity="center_horizontal"
         />
     <Button
@@ -21,7 +23,7 @@
         android:id="@+id/process"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Process"
+        android:text="Get Results"
         />
 
     <Button
