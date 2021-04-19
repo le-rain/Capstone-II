@@ -2,64 +2,161 @@
 // Camera API - https://developer.android.com/guide/topics/media/camera
 // Record Video API - https://developer.android.com/training/camera/videobasics
 // Custom Camera - https://developer.android.com/guide/topics/media/camera#custom-camera
-// Camera2 example (not same as android.hardware.camera, but  - https://github.com/android/camera-samples/blob/main/Camera2Video/app/src/main/java/com/example/android/camera2/video/fragments/CameraFragment.kt
+// Camera2 example (not same as android.hardware.camera, but  - https://github.com/android/camera-samples/blob/main/Camera2Video/app/src/main/java/com/example/android/camera2/video/fragments/CameraFragment.kt*/
 
-package com.example.myapplication
+package com.example.myapplication;
 
-import android.app.Activity
-import android.content.ContentValues.TAG
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Button
-import android.widget.VideoView
-import java.io.File
-import java.text.SimpleDateFormat
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.VideoView;
 
-const val REQUEST_VIDEO_CAPTURE = 1
-const val CHOOSE_VIDEO = 2
+import androidx.appcompat.app.AppCompatActivity;
 
-class CameraActivity : Activity() {
-    //    private var mCamera: Camera? = null
-//    private var mPreview: SurfaceView? = null
-//    private var mediaRecorder: MediaRecorder? = null // media recorder object (records video)
-    private var videoView: VideoView? = null
-    var videoUri: Uri? = null
-    var vidUri: Uri? = null;
-    private var videoProcessor: VideoProcessor? = null
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-    var mediaFile: File = File(Environment.getExternalStorageDirectory().getAbsolutePath()
-    + "/myvideo.mp4");
+class CameraActivity2 extends AppCompatActivity {
 
-    var intent2: Intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+    Uri videoUri;
+    Button recordButton;
+    VideoView videoView = findViewById(R.id.videoview);
+    Button playbackButton;
+    Button restartButton;
+    Button processButton;
+    private static final String TAG = "Cuffless BP";
 
-    var videoUri2: Uri = Uri.fromFile(mediaFile)
+    // when activity is created, check for camera
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.camera_activity);
 
-//    intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
-//    startActivityForResult(intent, VIDEO_CAPTURE);
+        recordButton = (Button) findViewById(R.id.record);
+        videoView = findViewById(R.id.videoview);
+        playbackButton = findViewById(R.id.playback);
+        restartButton = findViewById(R.id.restart);
 
-//    private late init var currentPhotoPath: String
+//        //checks for camera
+//        if (!hasCamera())
+//            recordButton.setEnabled(false);
 
-    // initializes layout, camera, preview surface (preview of video), and capture button info
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.camera_activity)
+        setButtonListeners();
 
-        videoView = findViewById(R.id.videoview)
+    }
+
+    // Set button listeners
+    private void setButtonListeners() {
+        //set listener for record button
+        recordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRecording(v);
+            }
+        });
 
         // set onClick function for playback button
-        val playbackButton: Button = findViewById(R.id.playback)
-        playbackButton.setOnClickListener {
-            if (videoUri == null) {
-                Log.d(TAG, "No video")
-            } else {
-                videoView?.setVideoURI(videoUri);
-                videoView?.start();
+        playbackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (videoUri == null) {
+                    Log.d(TAG, "No video");
+                } else {
+                    videoView.setVideoURI(videoUri);
+                    videoView.start();
+                }
             }
+        });
+
+        // set onClick function for restart button
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CameraActivity2.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //sets listener for process button
+        processButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    VidProcessor.readVid(videoUri.toString());
+                } catch (Exception e) {
+                    ;
+                }
+            }
+        });
+    }
+
+    //checks if phone has camera
+    private boolean hasCamera() {
+        return (getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA_ANY));
+    }
+
+    private static final int VIDEO_CAPTURE = 101;
+
+    //starts the recording
+    public void startRecording(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        videoUri = getOutputVideoUri();  // create a file to save the video in specific folder
+        if (videoUri != null) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
         }
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
+        startActivityForResult(intent, VIDEO_CAPTURE);
+    }
+
+//    // when activity produces a result
+//    protected void onActivityResult(int requestCode,
+//                                    int resultCode, Intent data) {
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//        videoUri = data.getData();
+//
+//        if (requestCode == VIDEO_CAPTURE) {
+//            if (resultCode == RESULT_OK) {
+//                Toast.makeText(this, "Video saved to:\n" +
+//                        videoUri, Toast.LENGTH_LONG).show();
+//            } else if (resultCode == RESULT_CANCELED) {
+//                Toast.makeText(this, "Video recording cancelled.",
+//                        Toast.LENGTH_LONG).show();
+//            } else {
+//                Toast.makeText(this, "Failed to record video",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
+
+    // sets a Uri and returns it
+    public static Uri getOutputVideoUri() {
+        if (Environment.getExternalStorageState() == null) {
+            return null;
+        }
+
+        File mediaStorage =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "CufflessBPVId");
+        if (!mediaStorage.exists() &&
+                !mediaStorage.mkdirs()) {
+            Log.e("Vid Processor: ", "failed to create directory: " + mediaStorage);
+            return null;
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        File mediaFile = new File(mediaStorage, "VID_" + timeStamp + ".mp4");
+        return Uri.fromFile(mediaFile);
+    }
 
 //        val processButton: Button = findViewById(R.id.process)
 //        processButton.setOnClickListener {
@@ -85,38 +182,9 @@ class CameraActivity : Activity() {
 //                    Log.d(TAG, "VideoProcessor Not Opened")
 //                }
 //            }
-//        }
+//        }*/
 
-        // set onclick function for record button
-        val captureButton: Button = findViewById(R.id.record)
-        captureButton.setOnClickListener {
-            Intent(MediaStore.ACTION_VIDEO_CAPTURE).also { takeVideoIntent ->
-                takeVideoIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE)
-                }
-            }
-//            vidUri = VidProcessor.getOutputVideoUri();
-//            if (vidUri != null) {
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, vidUri);
-//            }
-//            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // set the video image quality to high
-//            print("video URI capture button: " + videoUri.toString())
-        }
-
-        // onClick listener for restart button
-        val restartButton: Button = findViewById(R.id.restart)
-        restartButton.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
-        }
-
-        val processButton: Button = findViewById(R.id.process)
-        processButton.setOnClickListener{
-            val intent = Intent(this,ResultsActivity::class.java)
-            startActivity(intent);
-        }
-
-        // Create an instance of Camera
+    // Create an instance of Camera
 //        mCamera = getCameraInstance()
 //        mCamera?.setDisplayOrientation(90)
 //
@@ -125,24 +193,12 @@ class CameraActivity : Activity() {
 //            CameraPreview(this, it)
 //        }
 
-        // Set the Preview view as the content of our activity.
+    // Set the Preview view as the content of our activity.
 //        mPreview?.also {
 //            val preview: FrameLayout = findViewById(R.id.camera_preview)
 //            preview.addView(it)
 //        }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            if (intent?.data != null) {
-                videoUri = intent?.data
-//                currentPhotoPath = videoURI?.path.toString()
-            }
-            print("video URI: " + videoUri.toString())
-            //galleryAddVideo() // adds video to gallery
-            VidProcessor.readVid(vidUri.toString());
-        }
 
 //        else if (requestCode == CHOOSE_VIDEO && resultCode == RESULT_OK){
 //            if (intent?.data != null) {
@@ -154,26 +210,6 @@ class CameraActivity : Activity() {
 ////                videoView?.start()
 //            }
 //        }
-    }
-
-    // adds video to phone gallery
-    private fun galleryAddVideo() {
-        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-            val f = File(videoUri.toString()) //
-
-            Log.d(TAG, Uri.fromFile(f).toString())
-            mediaScanIntent.data = Uri.fromFile(f)
-            sendBroadcast(mediaScanIntent)
-        }
-    }
-
-    private fun openGalleryForVideo() {
-        val intent = Intent()
-        intent.type = "video/*"
-        intent.action = Intent.ACTION_PICK
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), CHOOSE_VIDEO)
-    }
-
 
 //    fun playVideoInDevicePlayer() {
 //        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(currentPhotoPath))
@@ -301,4 +337,3 @@ class CameraActivity : Activity() {
 //        mCamera = null
 //    }
 }
-

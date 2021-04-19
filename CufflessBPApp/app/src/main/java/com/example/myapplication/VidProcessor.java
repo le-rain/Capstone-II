@@ -1,41 +1,15 @@
 package com.example.myapplication;
 
-import android.net.Uri;
-import android.os.Environment;
-import android.util.Log;
-
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
 import org.bytedeco.opencv.opencv_core.Mat;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 //This class processes the video and contains methods to calculate BP from the video.
 
 class VidProcessor {
-
-    public static Uri getOutputVideoUri() {
-        if (Environment.getExternalStorageState() == null) {
-            return null;
-        }
-
-        File mediaStorage =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "CufflessBPVId");
-        if (!mediaStorage.exists() &&
-                !mediaStorage.mkdirs()) {
-            Log.e("Vid Processor: ", "failed to create directory: " + mediaStorage);
-            return null;
-        }
-
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-        File mediaFile = new File(mediaStorage, "VID_" + timeStamp + ".mp4");
-        return Uri.fromFile(mediaFile);
-    }
 
 
     public static Mat readVid(String fileName) throws Exception {
