@@ -58,24 +58,24 @@ function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,all_S2,p
         %find locations of audio peaks
         [~,audio_locs{i,1}] = findpeaks(audio_data(section_overlap(i,1):(section_overlap(i,2))),'MinPeakDistance',15); 
         %calculate ptt
-        if length(ppg_locs{i,1}) ~= length(audio_locs{i,1}) %if number of peaks are unequal 
-            delta1 = abs(ppg_locs{i,1}(1) - audio_locs{i,1}(1)); %difference between first indices
-            delta2 = abs(ppg_locs{i,1}(end) - audio_locs{i,1}(end)); %difference between last indices
-            if delta1 > delta2 %delete last value from longer vector
-                if length(ppg_locs{i,1}) > length(audio_locs{i,1})
-                    ppg_locs{i,1}(end) = [];
-                else
-                    audio_locs{i,1}(end) = [];
-                end
-            elseif delta2 > delta1 %delete first value from longer vector
-                if length(ppg_locs{i,1}) > length(audio_locs{i,1})
-                    ppg_locs{i,1}(1) = [];
-                else
-                    audio_locs{i,1}(1) = [];
-                end
-            end
-        end
-        ptt_calc{i,1} = mean(abs(ppg_locs{i} - audio_locs{i}))/frameRate;
+%         if length(ppg_locs{i,1}) ~= length(audio_locs{i,1}) %if number of peaks are unequal 
+%             delta1 = abs(ppg_locs{i,1}(1) - audio_locs{i,1}(1)); %difference between first indices
+%             delta2 = abs(ppg_locs{i,1}(end) - audio_locs{i,1}(end)); %difference between last indices
+%             if delta1 > delta2 %delete last value from longer vector
+%                 if length(ppg_locs{i,1}) > length(audio_locs{i,1})
+%                     ppg_locs{i,1}(end) = [];
+%                 else
+%                     audio_locs{i,1}(end) = [];
+%                 end
+%             elseif delta2 > delta1 %delete first value from longer vector
+%                 if length(ppg_locs{i,1}) > length(audio_locs{i,1})
+%                     ppg_locs{i,1}(1) = [];
+%                 else
+%                     audio_locs{i,1}(1) = [];
+%                 end
+%             end
+%         end
+%         ptt_calc{i,1} = mean(abs(ppg_locs{i} - audio_locs{i}))/frameRate;
     end
     ptt = mean(cell2mat(ptt_calc)); %average all PTTs (if multiple were calculated)
 end
