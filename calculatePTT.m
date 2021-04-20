@@ -1,6 +1,6 @@
 %integrates ppgTM and audioPulse to calculate PTT from best sections of 
 %both signals
-function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,all_S2,ptt_calc,ppg_amp] = calculatePTT(ppg_tm,audioData,ppg_sections,sectionI,allS2,frameRate,Fs)
+function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,all_S2,ptt_calc,ptt,ppg_amp] = calculatePTT(ppg_tm,audioData,ppg_sections,sectionI,allS2,frameRate,Fs)
     [p,q] = rat(frameRate/Fs); %factor for converting between video and audio sampling frequencies
     audio_sections = round(sectionI.*p./q); %resample audio indices 
     audio_data = resample(audioData,p,q); %resample audio data
@@ -64,7 +64,7 @@ function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,all_S2,p
         [~,ppg_locs{i,1}] = findpeaks(ppg_tm(section_overlap(i,1):(section_overlap(i,2))),'MinPeakDistance',15,'MinPeakHeight',ppg_amp*.25);
         ppg_locs{i,1} = ppg_locs{i,1} + section_overlap(i,1);
         %find locations of audio peaks
-        audio_locs_indices = find(all_S2 >= section_overlap(i,1) & all_S2 <= section_overlap(i,2)); 
+        audio_locs_indices = all_S2 >= section_overlap(i,1) & all_S2 <= section_overlap(i,2); 
         audio_locs{i,1} = all_S2(audio_locs_indices);
         %calculate ptt
         if length(ppg_locs{i,1}) > length(audio_locs{i,1}) %if number of peaks are unequal 
@@ -89,5 +89,5 @@ function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,all_S2,p
         end
         ptt_calc{i,1} = mean(ppg_locs{i} - audio_locs{i})/frameRate;
     end
-    %ptt = mean(cell2mat(ptt_calc)); %average all PTTs (if multiple were calculated)
+    ptt = mean(cell2mat(ptt_calc)); %average all PTTs (if multiple were calculated)
 end
