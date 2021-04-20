@@ -1,4 +1,10 @@
-function plotAudioSection(allS1, allS2, sectionS1, sectionS2, iStart, iEnd, name, x, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption)
+function plotAudioSection(allS1, allS2, sectionS1, sectionS2, iStart, iEnd, name, channel, x, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption)
+
+if channel == 0
+    channel = "Auto";
+else
+    channel = int2str(channel);
+end
 
 if plotWholeAudioOption == 1 % choose this option to plot the whole audio file 
     
@@ -16,7 +22,7 @@ if plotWholeAudioOption == 1 % choose this option to plot the whole audio file
     plot(S1n, S1p, 'r.', 'MarkerSize', 15)
     plot(S2n, S2p, '.', 'MarkerSize', 15)
     hold off
-    titlename = strcat("Audio Data for ", name);
+    titlename = strcat("Audio Data for ", name, " (Channel: ", channel, ")");
     title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
 
     legend('Audio Data','Detected Peaks', 'S1', 'S2')
@@ -47,7 +53,7 @@ if plotAudioSectionOption == 1 % choose this option to plot audio sections
         plot(s1n, s1p, 'r.', 'MarkerSize', 20)
         plot(s2n, s2p, '.', 'MarkerSize', 20)
                 
-        titlename = strcat("Section ", int2str(i), " for ", name); %title "Section n"
+        titlename = strcat("Section ", int2str(i), " for ", name, " (Channel: ", channel, ")"); %title "Section n"
         title(titlename, 'FontSize', 18, 'FontWeight', 'bold');
         
         hold off
