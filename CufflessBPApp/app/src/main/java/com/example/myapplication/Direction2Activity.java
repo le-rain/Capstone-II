@@ -19,7 +19,7 @@ public class Direction2Activity extends AppCompatActivity {
 
         readyBtn = findViewById(R.id.buttonNext3);
         readyBtn.setOnClickListener(v -> startActivity(new Intent(Direction2Activity.this,
-                CameraActivity.class)));
+                CameraActivity2.class)));
     }
 
     @Override

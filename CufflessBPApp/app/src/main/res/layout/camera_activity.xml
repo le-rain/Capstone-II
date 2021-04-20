@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/white"
     >
     <TextView
         android:layout_width="fill_parent"
@@ -18,12 +19,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Record"
+        android:textColor="@color/white"
         />
     <Button
         android:id="@+id/process"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Get Results"
+        android:textColor="@color/white"
         />
 
     <Button
@@ -31,6 +34,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Play"
+        android:textColor="@color/white"
         />
 
     <Button
@@ -38,6 +42,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Back to Start"
+        android:textColor="@color/white"
         />
 
     <VideoView

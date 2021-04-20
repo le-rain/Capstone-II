@@ -18,17 +18,18 @@ import android.widget.Button;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-class CameraActivity2 extends AppCompatActivity {
+public class CameraActivity2 extends AppCompatActivity {
 
     Uri videoUri;
     Button recordButton;
-    VideoView videoView = findViewById(R.id.videoview);
+    VideoView videoView;
     Button playbackButton;
     Button restartButton;
     Button processButton;
@@ -40,21 +41,27 @@ class CameraActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera_activity);
 
-        recordButton = (Button) findViewById(R.id.record);
-        videoView = findViewById(R.id.videoview);
-        playbackButton = findViewById(R.id.playback);
-        restartButton = findViewById(R.id.restart);
+//        recordButton = (Button) findViewById(R.id.record);
+//        videoView = findViewById(R.id.videoview);
+//        playbackButton = findViewById(R.id.playback);
+//        restartButton = findViewById(R.id.restart);
+//        processButton = findViewById(R.id.process);
 
 //        //checks for camera
 //        if (!hasCamera())
 //            recordButton.setEnabled(false);
 
         setButtonListeners();
-
     }
 
     // Set button listeners
     private void setButtonListeners() {
+        recordButton = (Button) findViewById(R.id.record);
+        videoView = findViewById(R.id.videoview);
+        playbackButton = findViewById(R.id.playback);
+        restartButton = findViewById(R.id.restart);
+        processButton = findViewById(R.id.process);
+
         //set listener for record button
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,13 +146,13 @@ class CameraActivity2 extends AppCompatActivity {
 //    }
 
     // sets a Uri and returns it
-    public static Uri getOutputVideoUri() {
+    public Uri getOutputVideoUri() {
         if (Environment.getExternalStorageState() == null) {
             return null;
         }
 
         File mediaStorage =
-                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "CufflessBPVId");
+                new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "CufflessBPVid");
         if (!mediaStorage.exists() &&
                 !mediaStorage.mkdirs()) {
             Log.e("Vid Processor: ", "failed to create directory: " + mediaStorage);
@@ -155,7 +162,11 @@ class CameraActivity2 extends AppCompatActivity {
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         File mediaFile = new File(mediaStorage, "VID_" + timeStamp + ".mp4");
-        return Uri.fromFile(mediaFile);
+
+        Uri fileUri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", mediaFile);
+        System.out.println("File Uri = " + fileUri.toString());
+        return fileUri;
+        //return Uri.fromFile(mediaFile);
     }
 
 //        val processButton: Button = findViewById(R.id.process)

@@ -69,8 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 weight = inputWeight.getText().toString();
                 height = inputHeight.getText().toString();
                 System.out.print("Age: " + age + "\nheight: " + height + " \nweight: " + weight + "\n");
-                startActivity(new Intent(MainActivity.this, CameraActivity.class));
-
+                startActivity(new Intent(MainActivity.this, CameraActivity2.class));
             }
         });
 
