@@ -57,7 +57,7 @@ for i = 1:length(iStart) %for every section
     allS1 = [];
     allS2 = [];
     
-    for l = 1:length(sectionS2)
+    for l = 1:length(S@)
         for m = 1:length(sectionS2{1,l})
             allS1 = [allS1; {sectionS1{1,l}{m,1} sectionS1{1,l}{m,2}}];
             allS2 = [allS2; {sectionS2{1,l}{m,1} sectionS2{1,l}{m,2}}];

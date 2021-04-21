@@ -29,7 +29,7 @@ for i = 1:length(iStart) %for every section
     
     % Loop for identifying and appending S1 and S2 peaks
     for k = 3:(length(sampleN))-1
-        if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist && sampleN(k-1)-sampleN(k-2) > 0.9*avg_dist
+        if sampleN(k)-sampleN(k-1) > avg_dist && sampleN(k-1)-sampleN(k-2) < avg_dist 
             s1 = [s1; {sampleN(k), peaks(k)}];
             s2 = [s2; {sampleN(k+1), peaks(k+1)}];
         end
