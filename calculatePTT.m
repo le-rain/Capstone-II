@@ -61,10 +61,10 @@ function [audio_sections,audio_data,section_overlap,ppg_locs,audio_locs,all_S2,p
     
     for i = 1:size(section_overlap,1)
         %find locations of ppg peaks
-        [~,ppg_locs{i,1}] = findpeaks(ppg_tm(section_overlap(i,1):(section_overlap(i,2))),'MinPeakDistance',15,'MinPeakHeight',ppg_amp*.25);
+        [~,ppg_locs{i,1}] = findpeaks(ppg_tm(section_overlap(i,1):(section_overlap(i,2))),'MinPeakDistance',15,'MinPeakHeight',ppg_amp*.2);
         ppg_locs{i,1} = ppg_locs{i,1} + section_overlap(i,1);
         %find locations of audio peaks
-        audio_locs_indices = all_S2 >= section_overlap(i,1) & all_S2 <= section_overlap(i,2); 
+        audio_locs_indices = find(all_S2 >= section_overlap(i,1) & all_S2 <= section_overlap(i,2)); 
         audio_locs{i,1} = all_S2(audio_locs_indices);
         %calculate ptt
         if length(ppg_locs{i,1}) > length(audio_locs{i,1}) %if number of peaks are unequal 
