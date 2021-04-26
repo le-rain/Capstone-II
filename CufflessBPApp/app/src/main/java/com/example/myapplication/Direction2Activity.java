@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-// Activity class for the first direction view.
+// Activity class for the second direction view.
 public class Direction2Activity extends AppCompatActivity {
 
     Button readyBtn;
@@ -19,24 +19,8 @@ public class Direction2Activity extends AppCompatActivity {
 
         readyBtn = findViewById(R.id.buttonNext3);
         readyBtn.setOnClickListener(v -> startActivity(new Intent(Direction2Activity.this,
-                CameraActivity2.class)));
+                CameraActivity.class)));
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
 
     // listens for volume up button press and release and starts the measurement activity
     public boolean dispatchKeyEvent(KeyEvent event) {

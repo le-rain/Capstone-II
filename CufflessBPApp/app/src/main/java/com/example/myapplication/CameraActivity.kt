@@ -23,27 +23,25 @@ const val REQUEST_VIDEO_CAPTURE = 1
 const val CHOOSE_VIDEO = 2
 
 class CameraActivity : Activity() {
-    //    private var mCamera: Camera? = null
-//    private var mPreview: SurfaceView? = null
-//    private var mediaRecorder: MediaRecorder? = null // media recorder object (records video)
+
     private var videoView: VideoView? = null
     var videoUri: Uri? = null
     var vidUri: Uri? = null;
     private var videoProcessor: VideoProcessor? = null
 
     var mediaFile: File = File(Environment.getExternalStorageDirectory().getAbsolutePath()
-    + "/myvideo.mp4");
+            + "/myvideo.mp4");
 
-    var intent2: Intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-
-    var videoUri2: Uri = Uri.fromFile(mediaFile)
-
-//    intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
-//    startActivityForResult(intent, VIDEO_CAPTURE);
-
-//    private late init var currentPhotoPath: String
-
-    // initializes layout, camera, preview surface (preview of video), and capture button info
+    //    var intent2: Intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+//
+//    var videoUri2: Uri = Uri.fromFile(mediaFile)
+//
+////    intent.putExtra(MediaStore.EXTRA_OUTPUT, videoUri);
+////    startActivityForResult(intent, VIDEO_CAPTURE);
+//
+////    private late init var currentPhotoPath: String
+//
+//    // initializes layout, camera, preview surface (preview of video), and capture button info
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.camera_activity)
@@ -60,32 +58,6 @@ class CameraActivity : Activity() {
                 videoView?.start();
             }
         }
-
-//        val processButton: Button = findViewById(R.id.process)
-//        processButton.setOnClickListener {
-//            if (videoUri == null) {
-//                Log.d(TAG, "No video")
-//            } else {
-//                val f = File(videoUri.toString())
-//                videoProcessor = VideoProcessor()
-//                videoProcessor!!.open(videoUri!!.path.toString())
-//
-//                val fullUri = videoProcessor!!.videoUri
-//                Log.d(TAG, fullUri)
-//                val isOpened = videoProcessor!!.isOpened;
-//                val frameNum = videoProcessor!!.frameNumber;
-//                Log.d(TAG, "Number of frames: $frameNum");
-//
-//                val videoLength = videoProcessor!!.videoLength;
-//                Log.d(TAG, "Video Length: $videoLength");
-//
-//                if (isOpened) {
-//                    Log.d(TAG, "VideoProcessor Opened")
-//                } else {
-//                    Log.d(TAG, "VideoProcessor Not Opened")
-//                }
-//            }
-//        }
 
         // set onclick function for record button
         val captureButton: Button = findViewById(R.id.record)
@@ -105,14 +77,14 @@ class CameraActivity : Activity() {
 
         // onClick listener for restart button
         val restartButton: Button = findViewById(R.id.restart)
-        restartButton.setOnClickListener{
+        restartButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent);
         }
 
         val processButton: Button = findViewById(R.id.process)
-        processButton.setOnClickListener{
-            val intent = Intent(this,ResultsActivity::class.java)
+        processButton.setOnClickListener {
+            val intent = Intent(this, ResultsActivity::class.java)
             startActivity(intent);
         }
 
@@ -137,11 +109,7 @@ class CameraActivity : Activity() {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             if (intent?.data != null) {
                 videoUri = intent?.data
-//                currentPhotoPath = videoURI?.path.toString()
             }
-            print("video URI: " + videoUri.toString())
-            //galleryAddVideo() // adds video to gallery
-            VidProcessor.readVid(vidUri.toString());
         }
 
 //        else if (requestCode == CHOOSE_VIDEO && resultCode == RESULT_OK){
@@ -155,24 +123,52 @@ class CameraActivity : Activity() {
 //            }
 //        }
     }
+}
 
-    // adds video to phone gallery
-    private fun galleryAddVideo() {
-        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-            val f = File(videoUri.toString()) //
+//    // adds video to phone gallery
+//    private fun galleryAddVideo() {
+//        Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
+//            val f = File(videoUri.toString()) //
+//
+//            Log.d(TAG, Uri.fromFile(f).toString())
+//            mediaScanIntent.data = Uri.fromFile(f)
+//            sendBroadcast(mediaScanIntent)
+//        }
+//    }
+//
+//    private fun openGalleryForVideo() {
+//        val intent = Intent()
+//        intent.type = "video/*"
+//        intent.action = Intent.ACTION_PICK
+//        startActivityForResult(Intent.createChooser(intent, "Select Video"), CHOOSE_VIDEO)
+//    }
 
-            Log.d(TAG, Uri.fromFile(f).toString())
-            mediaScanIntent.data = Uri.fromFile(f)
-            sendBroadcast(mediaScanIntent)
-        }
-    }
 
-    private fun openGalleryForVideo() {
-        val intent = Intent()
-        intent.type = "video/*"
-        intent.action = Intent.ACTION_PICK
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), CHOOSE_VIDEO)
-    }
+    //        val processButton: Button = findViewById(R.id.process)
+//        processButton.setOnClickListener {
+//            if (videoUri == null) {
+//                Log.d(TAG, "No video")
+//            } else {
+//                val f = File(videoUri.toString())
+//                videoProcessor = VideoProcessor()
+//                videoProcessor!!.open(videoUri!!.path.toString())
+//
+//                val fullUri = videoProcessor!!.videoUri
+//                Log.d(TAG, fullUri)
+//                val isOpened = videoProcessor!!.isOpened;
+//                val frameNum = videoProcessor!!.frameNumber;
+//                Log.d(TAG, "Number of frames: $frameNum");
+//
+//                val videoLength = videoProcessor!!.videoLength;
+//                Log.d(TAG, "Video Length: $videoLength");
+//
+//                if (isOpened) {
+//                    Log.d(TAG, "VideoProcessor Opened")
+//                } else {
+//                    Log.d(TAG, "VideoProcessor Not Opened")
+//                }
+//            }
+//        }
 
 
 //    fun playVideoInDevicePlayer() {
@@ -300,5 +296,5 @@ class CameraActivity : Activity() {
 //        mCamera?.release()
 //        mCamera = null
 //    }
-}
+
 

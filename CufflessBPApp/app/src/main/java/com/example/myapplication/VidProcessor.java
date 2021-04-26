@@ -15,7 +15,7 @@ class VidProcessor {
     public static Mat readVid(String fileName) throws Exception {
 
         OpenCVFrameConverter.ToMat converterToMat = new OpenCVFrameConverter.ToMat();
-        System.out.println("converterToMat failed");
+        //System.out.println("converterToMat failed");
 
 //        if (args.length < 2) {
 //            System.out.println("Two parameters are required to run this program, first parameter " +
@@ -46,9 +46,9 @@ class VidProcessor {
 
         Frame videoFrame;
         Mat videoMat = null;
-//        while (true) {
-//            videoFrame = grabber.grab();
-//            videoMat = converterToMat.convert(videoFrame);
+        while (true) {
+            videoFrame = grabber.grab();
+            videoMat = converterToMat.convert(videoFrame);
             // Mat videoMatGray = new Mat();
             // Convert the current frame to grayscale:
 //            cvtColor(videoMat, videoMatGray, COLOR_BGRA2GRAY);
@@ -101,7 +101,8 @@ class VidProcessor {
 //                break;
 //            }
 //        }
-//        System.out.print(videoMat);
-        return videoMat;
+            System.out.print("VideoMat" + videoMat);
+            return videoMat;
+        }
     }
 }

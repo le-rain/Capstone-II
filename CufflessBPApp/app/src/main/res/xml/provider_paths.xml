@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <files-path path="BPVideos/" name="BPAppVideos" />
+    <external-files-path path="BPVideos/" name="BPAppVideos"/>
+    <external-path path ="BPVideos/" name="BPAppVideos" />
+    <external-media-path path = "BPVideos/" name = "BPAppVideos" />
 </paths>
+
