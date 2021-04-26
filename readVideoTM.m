@@ -1,6 +1,5 @@
 %reads video file and returns red and green channels, file name, video
 %height, video width, and frame rate
-%TO DO: implement reduction coefficient to make processing faster
 function [video,fileName,height,width,roiHeight,roiWidth,frameRate] = readVideoTM(file)
     obj = VideoReader(file); %read video
     reduction_coeff = 4;

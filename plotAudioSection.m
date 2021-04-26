@@ -1,7 +1,7 @@
-function plotAudioSection(allS1, allS2, sectionS1, sectionS2, iStart, iEnd, name, channel, x, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption)
+function plotAudioSection(allS1, allS2, sectionS1, sectionS2, iStart, iEnd, name, channel, x, y, minDist, plotWholeAudioOption, plotAudioSectionOption)
 
-if channel == 0
-    channel = "Auto";
+if ischar(channel) == 1
+    channel = convertCharsToStrings(channel);
 else
     channel = int2str(channel);
 end

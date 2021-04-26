@@ -14,7 +14,7 @@
 function [sectionI, sectionS2, allS2, Fs, audioData] = audioPulse(audio, channel, plotWholeAudioOption, plotAudioSectionOption)
 
 % Read audio from video and find peaks
-[name, peaks, nSamples, x, y, Fs, minDist] = findAudioPeaks(audio, channel);
+[name, peaks, nSamples, x, y, Fs, minDist, channel] = findAudioPeaks(audio, channel);
 
 audioData = y;
 
@@ -25,7 +25,7 @@ audioData = y;
 [allS1, allS2, sectionS1, sectionS2] = findS1S2peaks(iStart, iEnd, x, y, minDist);
 
 % Plot audio sections with s1 and s2 peaks
-plotAudioSection(allS1, allS2, sectionS1, sectionS2, iStart, iEnd, name, channel, x, y, Fs, minDist, plotWholeAudioOption, plotAudioSectionOption);
+plotAudioSection(allS1, allS2, sectionS1, sectionS2, iStart, iEnd, name, channel, x, y, minDist, plotWholeAudioOption, plotAudioSectionOption);
 
 
 end
