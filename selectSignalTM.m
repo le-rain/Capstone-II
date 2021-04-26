@@ -2,7 +2,7 @@
 %returns PPG with optimal channel and template type
 %channel = 1 for red channel, 2 for green channel
 %template_type = 1 for regular template, 2 for reversed template
-%TO DO: adjust template based on heart rate, amplitude
+%TO DO: adjust template based on heart rate
 function [ppg,channel,template_type,template_resampled_scaled,template_resampled_rev_scaled] = selectSignalTM(video,frameRate)
     template = readmatrix('ppg_template.csv');
     template = template + abs(min(template)); %make it all positive
