@@ -34,16 +34,3 @@ public class Direction2Activity extends AppCompatActivity {
         return super.dispatchKeyEvent(event);
     }
 }
-
-//    EditText editText = (EditText) findViewById(R.id.inputName);
-//    editText.setOnEditorActionListener(new OnEditorActionListener() {
-//        @Override
-//        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//            boolean handled = false;
-//            if (actionId == EditorInfo.IME_ACTION_SEND) {
-//                sendMessage();
-//                handled = true;
-//            }
-//            return handled;
-//        }
-//    });

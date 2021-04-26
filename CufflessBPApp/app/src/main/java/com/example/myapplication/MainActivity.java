@@ -53,16 +53,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-
-
-//    // displays message if user does not fill in all fields
-//    private void displayErrorMessage() {
-//        Context context = getApplicationContext();
-//        CharSequence text = "Please complete in all fields with valid (positive) inputs.";
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.setGravity(Gravity.CENTER, 0, 0);
-//        toast.show();
-//    }
-//}

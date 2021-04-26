@@ -38,21 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecordActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.RECORD" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.CAMERA" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ResultsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.RESULTS" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
